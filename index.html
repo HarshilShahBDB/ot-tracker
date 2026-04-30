@@ -748,13 +748,6 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 });
   
 // Check if already logged in on page load
-window.addEventListener('load', async () => {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session?.user) {
-    await initApp(session.user);
-  }
-});
-
 sb.auth.onAuthStateChange(async (event, session) => {
   if (event === 'SIGNED_IN' && session?.user) {
     await initApp(session.user);
