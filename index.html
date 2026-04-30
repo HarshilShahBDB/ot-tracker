@@ -741,8 +741,12 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-email').value = '';
   document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-btn').disabled = false;
+  document.getElementById('login-btn').textContent = 'Sign In';
+  document.getElementById('login-email').focus();
 });
-
+  
 // Check if already logged in on page load
 window.addEventListener('load', async () => {
   const { data: { session } } = await sb.auth.getSession();
