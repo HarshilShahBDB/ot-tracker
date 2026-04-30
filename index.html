@@ -755,6 +755,16 @@ window.addEventListener('load', async () => {
   }
 });
 
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_IN' && session?.user) {
+    await initApp(session.user);
+  }
+  if (event === 'SIGNED_OUT') {
+    currentUser = null;
+    isOwner = false;
+  }
+});
+
 // ─────────────────────────────────────────────
 // INIT APP AFTER LOGIN
 // ─────────────────────────────────────────────
