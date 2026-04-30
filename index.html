@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>OT Tracker · Harshil Shah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-2: #1a1814;
+    --surface: #222019;
+    --line: #3a362e;
+    --ink: #f5f0e6;
+    --ink-soft: #c9c2b4;
+    --muted: #7d7669;
+    --gold: #c9a961;
+    --gold-bright: #e0c178;
+    --green: #6b9b6b;
+    --red: #c97a6b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  body {
+    background-image:
+      radial-gradient(circle at 80% -10%, rgba(201, 169, 97, 0.08), transparent 50%),
+      radial-gradient(circle at 20% 110%, rgba(201, 169, 97, 0.04), transparent 60%);
+  }
+  .app { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* Header */
+  header { padding: 8px 0 32px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+  .brand-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  h1 em { font-style: italic; color: var(--gold-bright); }
+  .sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* Status card */
+  .status-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .dot.connecting { background: var(--gold); animation: pulse 1.5s ease-in-out infinite; }
+  .dot.connected { background: var(--green); box-shadow: 0 0 12px rgba(107, 155, 107, 0.6); }
+  .dot.error { background: var(--red); }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .status-text { flex: 1; }
+  .status-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .status-value { font-size: 14px; color: var(--ink); }
+  .status-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Stat grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 16px;
+  }
+  .stat-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-num.gold { color: var(--gold-bright); }
+  .stat-unit {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  /* Coming soon panel */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .panel h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .panel p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .panel ul {
+    list-style: none;
+    margin-top: 14px;
+  }
+  .panel li {
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel li:last-child { border-bottom: none; }
+  .check {
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (min-width: 600px) {
+    .app { padding: 48px 32px; }
+    h1 { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="brand-line">◆ Harshil Shah · BDB341</div>
+    <h1>Overtime <em>Ledger</em></h1>
+    <div class="sub">A personal record, in the cloud.</div>
+  </header>
+
+  <div class="status-card">
+    <div class="dot connecting" id="db-dot"></div>
+    <div class="status-text">
+      <div class="status-label">Database</div>
+      <div class="status-value" id="db-status">Connecting to Supabase…</div>
+      <div class="status-detail" id="db-detail"></div>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-name">Approved</div>
+      <div><span class="stat-num gold" id="stat-approved">—</span><span class="stat-unit">hrs</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-name">Pending</div>
+      <div><span class="stat-num" id="stat-pending">—</span><span class="stat-unit">hrs</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-name">Comp Used</div>
+      <div><span class="stat-num" id="stat-used">—</span><span class="stat-unit">hrs</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-name">Balance</div>
+      <div><span class="stat-num gold" id="stat-balance">—</span><span class="stat-unit">hrs</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Foundation laid</h2>
+    <p>The skeleton of the system is live. In the next sessions, we add the working features.</p>
+    <ul>
+      <li><span class="check">[✓]</span> Database online — Supabase, Mumbai region</li>
+      <li><span class="check">[✓]</span> Web app deployed — GitHub Pages</li>
+      <li><span class="check">[✓]</span> Design direction set — mobile-first, dark, serif accents</li>
+      <li><span class="check">[ ]</span> Log OT entries — next session</li>
+      <li><span class="check">[ ]</span> Comp-off calculator — soon</li>
+      <li><span class="check">[ ]</span> Manager approval flow — soon</li>
+      <li><span class="check">[ ]</span> OneDrive Excel auto-sync — soon</li>
+    </ul>
+  </div>
+
+  <footer>
+    Built with care · v0.1
+  </footer>
+
+</div>
+
+<script>
+  // Initialise Supabase client and test the connection
+  async function testConnection() {
+    const dot = document.getElementById('db-dot');
+    const status = document.getElementById('db-status');
+    const detail = document.getElementById('db-detail');
+
+    try {
+      // Check config exists
+      if (typeof SUPABASE_CONFIG === 'undefined') {
+        throw new Error('config.js not loaded');
+      }
+
+      // Initialise client
+      const sb = window.supabase.createClient(
+        SUPABASE_CONFIG.url,
+        SUPABASE_CONFIG.publishableKey
+      );
+
+      // Try a lightweight query — count entries (uses our 'entries' table)
+      const { count, error } = await sb
+        .from('entries')
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        // RLS might block this without auth — that's actually expected and fine
+        if (error.message.toLowerCase().includes('jwt') ||
+            error.message.toLowerCase().includes('authent') ||
+            error.code === 'PGRST301') {
+          dot.className = 'dot connected';
+          status.textContent = 'Connected · Auth required for data';
+          detail.textContent = 'Database is reachable. Login will be added next session.';
+          return;
+        }
+        throw error;
+      }
+
+      // Successful connection
+      dot.className = 'dot connected';
+      status.textContent = 'Connected · Live';
+      detail.textContent = `Entries table: ${count ?? 0} records · Mumbai region`;
+
+    } catch (err) {
+      const dot2 = document.getElementById('db-dot');
+      const status2 = document.getElementById('db-status');
+      const detail2 = document.getElementById('db-detail');
+      dot2.className = 'dot error';
+      status2.textContent = 'Connection failed';
+      detail2.textContent = err.message || 'Unknown error — check console';
+      console.error('Supabase connection error:', err);
+    }
+  }
+
+  // Run on page load
+  window.addEventListener('load', testConnection);
+</script>
+
+</body>
+</html>
