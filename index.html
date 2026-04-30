@@ -761,7 +761,7 @@ async function initApp(user) {
   const { data: roleData } = await sb
     .from('user_roles')
     .select('role')
-    .eq('email', user.email)
+    .eq('email', user.email.toLowerCase())
     .single();
 
   isOwner = roleData?.role === 'owner';
