@@ -32,7 +32,6 @@
   }
   .app { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
 
-  /* Header */
   header { padding: 8px 0 32px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
   .brand-line {
     font-family: 'JetBrains Mono', monospace;
@@ -56,7 +55,6 @@
     margin-top: 10px;
   }
 
-  /* Status card */
   .status-card {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -92,7 +90,6 @@
   .status-value { font-size: 14px; color: var(--ink); }
   .status-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-  /* Stat grid */
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -128,7 +125,6 @@
     font-weight: 400;
   }
 
-  /* Coming soon panel */
   .panel {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -168,7 +164,6 @@
     flex-shrink: 0;
   }
 
-  /* Footer */
   footer {
     text-align: center;
     margin-top: 48px;
@@ -179,7 +174,6 @@
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 0.05em;
   }
-  footer a { color: var(--gold); text-decoration: none; }
 
   @media (min-width: 600px) {
     .app { padding: 48px 32px; }
@@ -246,59 +240,51 @@
 </div>
 
 <script>
-  // Initialise Supabase client and test the connection
   async function testConnection() {
     const dot = document.getElementById('db-dot');
     const status = document.getElementById('db-status');
     const detail = document.getElementById('db-detail');
 
     try {
-      // Check config exists
       if (typeof SUPABASE_CONFIG === 'undefined') {
         throw new Error('config.js not loaded');
       }
 
-      // Initialise client
       const sb = window.supabase.createClient(
         SUPABASE_CONFIG.url,
         SUPABASE_CONFIG.publishableKey
       );
 
-      // Try a lightweight query — count entries (uses our 'entries' table)
-      const { count, error } = await sb
+      const { error, status: httpStatus } = await sb
         .from('entries')
-        .select('*', { count: 'exact', head: true });
+        .select('id', { count: 'exact', head: true });
 
-      if (error) {
-        // RLS might block this without auth — that's actually expected and fine
-        if (error.message.toLowerCase().includes('jwt') ||
-            error.message.toLowerCase().includes('authent') ||
-            error.code === 'PGRST301') {
-          dot.className = 'dot connected';
-          status.textContent = 'Connected · Auth required for data';
-          detail.textContent = 'Database is reachable. Login will be added next session.';
-          return;
-        }
-        throw error;
+      // 401 = auth required (RLS working correctly) = SUCCESS
+      if (httpStatus === 401 || (error && (
+          error.code === 'PGRST301' ||
+          error.message?.toLowerCase().includes('jwt') ||
+          error.message?.toLowerCase().includes('authent') ||
+          error.message?.toLowerCase().includes('row-level')))) {
+        dot.className = 'dot connected';
+        status.textContent = 'Connected · Secured';
+        detail.textContent = 'Database is reachable. Login & data access added next session.';
+        return;
       }
 
-      // Successful connection
+      if (error) throw error;
+
       dot.className = 'dot connected';
       status.textContent = 'Connected · Live';
-      detail.textContent = `Entries table: ${count ?? 0} records · Mumbai region`;
+      detail.textContent = 'Mumbai region · ready for data.';
 
     } catch (err) {
-      const dot2 = document.getElementById('db-dot');
-      const status2 = document.getElementById('db-status');
-      const detail2 = document.getElementById('db-detail');
-      dot2.className = 'dot error';
-      status2.textContent = 'Connection failed';
-      detail2.textContent = err.message || 'Unknown error — check console';
+      dot.className = 'dot error';
+      status.textContent = 'Connection failed';
+      detail.textContent = err.message || 'Unknown error — check console';
       console.error('Supabase connection error:', err);
     }
   }
 
-  // Run on page load
   window.addEventListener('load', testConnection);
 </script>
 
