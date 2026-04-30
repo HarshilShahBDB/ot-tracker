@@ -758,13 +758,17 @@ async function initApp(user) {
   currentUser = user;
 
   // Check role
-  const { data: roleData } = await sb
-    .from('user_roles')
-    .select('role')
-    .eq('email', user.email.toLowerCase())
-    .single();
+  const { data: roleData, error: roleError } = await sb
+  .from('user_roles')
+  .select('role')
+  .eq('email', user.email.toLowerCase())
+  .single();
 
-  isOwner = roleData?.role === 'owner';
+console.log('Role data:', roleData);
+console.log('Role error:', roleError);
+console.log('My email:', user.email.toLowerCase());
+
+isOwner = roleData?.role === 'owner';
 
   // Show/hide elements based on role
   document.getElementById('login-screen').style.display = 'none';
