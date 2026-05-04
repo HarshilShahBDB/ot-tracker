@@ -762,29 +762,49 @@ sb.auth.onAuthStateChange(async (event, session) => {
 // INIT APP AFTER LOGIN
 // ─────────────────────────────────────────────
 async function initApp(user) {
-  currentUser = user;
+  try {
+    console.log('initApp started for:', user.email);
+    currentUser = user;
 
-  // Check role
-  const { data: roleData, error: roleError } = await sb
-  .from('user_roles')
-  .select('role')
-  .eq('email', user.email.toLowerCase())
-  .single();
+    // Check role
+    const { data: roleData, error: roleError } = await sb
+      .from('user_roles')
+      .select('role')
+      .eq('email', user.email.toLowerCase())
+      .single();
 
-console.log('Role data:', roleData);
-console.log('Role error:', roleError);
-console.log('My email:', user.email.toLowerCase());
+    console.log('Role data:', roleData);
+    console.log('Role error:', roleError);
 
-isOwner = roleData?.role === 'owner';
+    isOwner = roleData?.role === 'owner';
+    console.log('isOwner:', isOwner);
 
-  // Show/hide elements based on role
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-screen').style.display = 'block';
+    // Show app, hide login
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
 
-  if (!isOwner) {
-    document.getElementById('viewer-badge').style.display = 'inline-flex';
-    document.getElementById('tab-log-btn').style.display = 'none';
+    if (!isOwner) {
+      document.getElementById('viewer-badge').style.display = 'inline-flex';
+      document.getElementById('tab-log-btn').style.display = 'none';
+    }
+
+    // Reset login button in case of re-login
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').textContent = 'Sign In';
+
+    // Load data
+    console.log('Loading dashboard...');
+    await loadDashboard();
+    console.log('Loading entries...');
+    await loadAllEntries();
+    console.log('initApp complete');
+  } catch (err) {
+    console.error('initApp ERROR:', err);
+    alert('Init error: ' + err.message);
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').textContent = 'Sign In';
   }
+}
 
   // Load data
   await loadDashboard();
