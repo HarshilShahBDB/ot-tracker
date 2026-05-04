@@ -31,80 +31,16 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
-
-/* ── LOGIN ── */
-.login-wrap {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-.login-box {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 40px 32px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-.login-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.login-title {
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-.login-sub {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 32px;
-}
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login-box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 40px 32px; width: 100%; max-width: 400px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+.login-brand { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.login-title { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+.login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.field label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-soft);
-  letter-spacing: 0.02em;
-}
-.field input {
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--ink);
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-}
-.field input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
-}
-.btn {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 13px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-}
+.field label { font-size: 12px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.02em; }
+.field input { font-family: 'Inter', sans-serif; font-size: 15px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+.field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
+.btn { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 13px 20px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
 .btn-primary { background: var(--ink); color: white; width: 100%; }
 .btn-primary:hover { background: #333; }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -113,376 +49,87 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .btn-danger { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; }
 .btn-danger:hover { background: #fad5d5; }
 .btn-sm { padding: 7px 14px; font-size: 12px; }
-.login-error {
-  background: var(--red-soft);
-  color: var(--red);
-  border: 1px solid #f5c6c6;
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 13px;
-  margin-bottom: 16px;
-  display: none;
-}
-
-/* ── APP SHELL ── */
+.login-error { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
 .app { display: none; max-width: 800px; margin: 0 auto; padding: 0 0 80px; }
-
-/* ── TOPBAR ── */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(248,247,244,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-}
-.topbar-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  text-transform: uppercase;
-  font-weight: 500;
-}
+.topbar { position: sticky; top: 0; z-index: 50; background: rgba(248,247,244,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.topbar-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 500; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
-.viewer-badge {
-  background: var(--blue-soft);
-  color: var(--blue);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid #c5d8f8;
-}
-.logout-btn {
-  font-size: 12px;
-  color: var(--muted);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-family: 'Inter', sans-serif;
-}
+.viewer-badge { background: var(--blue-soft); color: var(--blue); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; border: 1px solid #c5d8f8; }
+.logout-btn { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 6px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; }
 .logout-btn:hover { background: var(--surface-2); color: var(--ink); }
-
-/* ── MAIN CONTENT ── */
 .main { padding: 24px 20px; }
-
-/* ── BALANCE CARDS ── */
-.balance-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.balance-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
-}
-.balance-card.primary {
-  grid-column: 1 / -1;
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
-}
-.bal-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
+.balance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.balance-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.balance-card.primary { grid-column: 1 / -1; background: var(--ink); color: white; border-color: var(--ink); }
+.bal-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .balance-card.primary .bal-label { color: rgba(255,255,255,0.5); }
-.bal-num {
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
+.bal-num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
 .balance-card.primary .bal-num { color: #f0c060; }
 .bal-unit { font-size: 13px; font-weight: 400; margin-left: 3px; color: var(--muted); }
 .balance-card.primary .bal-unit { color: rgba(255,255,255,0.4); }
 .bal-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 .balance-card.primary .bal-sub { color: rgba(255,255,255,0.4); }
-
-/* ── SECTION HEADER ── */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  margin-top: 28px;
-}
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-.section-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-/* ── LOG ENTRY FORM ── */
-.form-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.mode-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.mode-btn {
-  padding: 10px 8px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg);
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.15s;
-  font-family: 'Inter', sans-serif;
-}
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; margin-top: 28px; }
+.section-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.section-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+.form-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+.mode-btn { padding: 10px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Inter', sans-serif; }
 .mode-btn:hover { border-color: var(--gold); }
-.mode-btn.active {
-  border-color: var(--gold);
-  background: var(--gold-soft);
-  box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
-}
+.mode-btn.active { border-color: var(--gold); background: var(--gold-soft); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
 .mode-btn .mode-name { font-size: 12px; font-weight: 600; color: var(--ink); }
 .mode-btn .mode-desc { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
 .form-row.full { grid-template-columns: 1fr; }
 .form-field { display: flex; flex-direction: column; gap: 5px; }
 .form-label { font-size: 11px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.03em; text-transform: uppercase; }
-.form-input {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
-}
+.form-input { font-family: 'Inter', sans-serif; font-size: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
 .form-input:focus { border-color: var(--gold); }
 textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; }
-
-/* ── OT PREVIEW ── */
-.ot-preview {
-  background: var(--gold-soft);
-  border: 1px solid #e8d898;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  display: none;
-}
-.ot-preview-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  padding: 3px 0;
-}
+.ot-preview { background: var(--gold-soft); border: 1px solid #e8d898; border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; display: none; }
+.ot-preview-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
 .ot-preview-row span:first-child { color: var(--ink-soft); }
 .ot-preview-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
 .ot-preview-row.total span { font-weight: 700; font-size: 14px; color: var(--gold); }
-
-/* ── PILLS / STATUS ── */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-family: 'JetBrains Mono', monospace;
-  white-space: nowrap;
-}
+.pill { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
 .pill-pending { background: var(--orange-soft); color: var(--orange); border: 1px solid #f0d0b0; }
 .pill-approved { background: var(--green-soft); color: var(--green); border: 1px solid #b8ddb8; }
 .pill-rejected { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; }
 .pill-wfo-normal { background: var(--blue-soft); color: var(--blue); border: 1px solid #c5d8f8; }
 .pill-wfo-holiday { background: var(--orange-soft); color: var(--orange); border: 1px solid #f0d0b0; }
 .pill-wfh { background: var(--green-soft); color: var(--green); border: 1px solid #b8ddb8; }
-
-/* ── ENTRY LIST ── */
-.entry-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 10px;
-  transition: box-shadow 0.15s;
-}
+.entry-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 10px; transition: box-shadow 0.15s; }
 .entry-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-.entry-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
+.entry-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
 .entry-date { font-size: 13px; font-weight: 600; color: var(--ink); }
 .entry-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
 .entry-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.entry-hours {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-}
+.entry-hours { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 600; color: var(--ink); }
 .entry-hrs-label { font-size: 10px; color: var(--muted); }
 .entry-work { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 10px; }
 .entry-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .entry-pills { display: flex; gap: 6px; flex-wrap: wrap; }
 .entry-actions { display: flex; gap: 6px; }
 .entry-mail-date { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-
-/* ── EMPTY STATE ── */
-.empty {
-  text-align: center;
-  padding: 48px 20px;
-  color: var(--muted);
-  font-size: 14px;
-}
+.empty { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 14px; }
 .empty-icon { font-size: 32px; margin-bottom: 12px; }
-
-/* ── TAB BAR ── */
-.tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 0; right: 0;
-  background: rgba(248,247,244,0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--line);
-  display: flex;
-  z-index: 50;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.tab-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  color: var(--muted);
-  transition: color 0.15s;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
+.tabbar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(248,247,244,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--line); display: flex; z-index: 50; max-width: 800px; margin: 0 auto; }
+.tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--muted); transition: color 0.15s; gap: 4px; font-size: 10px; font-weight: 500; letter-spacing: 0.03em; }
 .tab-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tab-btn.active { color: var(--ink); }
 .tab-btn.active svg { stroke-width: 2.2; }
-
-/* ── TABS CONTENT ── */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-
-/* ── TOAST ── */
-.toast {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--ink);
-  color: white;
-  padding: 12px 20px;
-  border-radius: 24px;
-  font-size: 13px;
-  font-weight: 500;
-  opacity: 0;
-  transition: all 0.3s;
-  z-index: 200;
-  pointer-events: none;
-  white-space: nowrap;
-}
+.toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: white; padding: 12px 20px; border-radius: 24px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ── MODAL ── */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 100;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  padding: 24px 20px 40px;
-  width: 100%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.modal-handle {
-  width: 40px; height: 4px;
-  background: var(--line);
-  border-radius: 2px;
-  margin: 0 auto 20px;
-}
-.modal-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
-
-/* ── LOADING ── */
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  color: var(--muted);
-  font-size: 13px;
-  gap: 10px;
-}
-.spinner {
-  width: 18px; height: 18px;
-  border: 2px solid var(--line);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
+.loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--muted); font-size: 13px; gap: 10px; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-@media (min-width: 600px) {
-  .main { padding: 32px; }
-  .topbar { padding: 0 32px; }
-}
+@media (min-width: 600px) { .main { padding: 32px; } .topbar { padding: 0 32px; } }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════ LOGIN ═══════════════════════════════ -->
 <div class="login-wrap" id="login-screen">
   <div class="login-box">
     <div class="login-brand">◆ BDB341 · OT Tracker</div>
@@ -501,10 +148,7 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
   </div>
 </div>
 
-<!-- ═══════════════════════════════ APP ═══════════════════════════════ -->
 <div class="app" id="app-screen">
-
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-brand">◆ OT Ledger</div>
     <div class="topbar-right">
@@ -512,11 +156,7 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
       <button class="logout-btn" id="logout-btn">Sign out</button>
     </div>
   </div>
-
-  <!-- Main -->
   <div class="main">
-
-    <!-- TAB: DASHBOARD -->
     <div class="tab-content active" id="tab-dashboard">
       <div class="balance-grid" id="balance-grid">
         <div class="loading"><div class="spinner"></div> Loading…</div>
@@ -527,8 +167,6 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
       </div>
       <div id="recent-list"><div class="loading"><div class="spinner"></div></div></div>
     </div>
-
-    <!-- TAB: LOG ENTRY (owner only) -->
     <div class="tab-content" id="tab-log">
       <div class="section-header" style="margin-top:0">
         <div class="section-title">Log Overtime</div>
@@ -536,76 +174,36 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
       <div class="form-card">
         <div class="form-label" style="margin-bottom:10px;">Work Mode</div>
         <div class="mode-grid">
-          <div class="mode-btn" data-mode="wfo-normal">
-            <div class="mode-name">Office</div>
-            <div class="mode-desc">Normal day · 8h30 deducted</div>
-          </div>
-          <div class="mode-btn" data-mode="wfo-holiday">
-            <div class="mode-name">Office</div>
-            <div class="mode-desc">Holiday · full time = OT</div>
-          </div>
-          <div class="mode-btn" data-mode="wfh">
-            <div class="mode-name">WFH</div>
-            <div class="mode-desc">Full time = OT</div>
-          </div>
+          <div class="mode-btn" data-mode="wfo-normal"><div class="mode-name">Office</div><div class="mode-desc">Normal · 8h30 deducted</div></div>
+          <div class="mode-btn" data-mode="wfo-holiday"><div class="mode-name">Office</div><div class="mode-desc">Holiday · full = OT</div></div>
+          <div class="mode-btn" data-mode="wfh"><div class="mode-name">WFH</div><div class="mode-desc">Full time = OT</div></div>
         </div>
-
         <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-input" id="f-date">
-          </div>
-          <div class="form-field">
-            <label class="form-label">Date Range Label <span style="color:var(--muted);font-size:10px;">(optional)</span></label>
-            <input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr WDD">
-          </div>
+          <div class="form-field"><label class="form-label">Date</label><input type="date" class="form-input" id="f-date"></div>
+          <div class="form-field"><label class="form-label">Date Range Label</label><input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr"></div>
         </div>
-
         <div class="form-row" id="time-row">
-          <div class="form-field">
-            <label class="form-label">From</label>
-            <input type="time" class="form-input" id="f-from">
-          </div>
-          <div class="form-field">
-            <label class="form-label">To</label>
-            <input type="time" class="form-input" id="f-to">
-          </div>
+          <div class="form-field"><label class="form-label">From</label><input type="time" class="form-input" id="f-from"></div>
+          <div class="form-field"><label class="form-label">To</label><input type="time" class="form-input" id="f-to"></div>
         </div>
-
         <div class="form-row full" id="manual-row" style="display:none;">
-          <div class="form-field">
-            <label class="form-label">Total OT Hours (manual)</label>
-            <input type="number" class="form-input" id="f-manual" min="1" max="200" placeholder="e.g. 49">
-          </div>
+          <div class="form-field"><label class="form-label">Total OT Hours</label><input type="number" class="form-input" id="f-manual" min="1" max="200"></div>
         </div>
-
         <div class="form-row full">
-          <div class="form-field">
-            <label class="form-label">Work Done</label>
-            <textarea class="form-input" id="f-work" placeholder="Describe what you worked on…"></textarea>
-          </div>
+          <div class="form-field"><label class="form-label">Work Done</label><textarea class="form-input" id="f-work" placeholder="Describe what you worked on…"></textarea></div>
         </div>
-
         <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">Dated Mail <span style="color:var(--muted);font-size:10px;">(date you emailed manager)</span></label>
-            <input type="date" class="form-input" id="f-mail-date">
-          </div>
-          <div class="form-field" style="justify-content:flex-end;">
-          </div>
+          <div class="form-field"><label class="form-label">Dated Mail</label><input type="date" class="form-input" id="f-mail-date"></div>
+          <div class="form-field"></div>
         </div>
-
         <div class="ot-preview" id="ot-preview">
           <div class="ot-preview-row"><span>Total duration</span><span id="prev-duration">—</span></div>
           <div class="ot-preview-row" id="prev-deduct-row"><span>Shift deduction</span><span>− 8h 30m</span></div>
           <div class="ot-preview-row total"><span>OT credited</span><span id="prev-ot">—</span></div>
         </div>
-
         <button class="btn btn-primary" id="save-entry-btn">Save Entry</button>
       </div>
     </div>
-
-    <!-- TAB: ALL ENTRIES -->
     <div class="tab-content" id="tab-entries">
       <div class="section-header" style="margin-top:0;">
         <div class="section-title">All Entries</div>
@@ -613,10 +211,7 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
       </div>
       <div id="all-list"><div class="loading"><div class="spinner"></div></div></div>
     </div>
-
-  </div><!-- /main -->
-
-  <!-- Tab Bar -->
+  </div>
   <nav class="tabbar" id="tabbar">
     <button class="tab-btn active" data-tab="dashboard">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -627,37 +222,26 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
       Log OT
     </button>
     <button class="tab-btn" data-tab="entries">
-      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg>
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
       Entries
     </button>
   </nav>
+</div>
 
-</div><!-- /app -->
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-const sb = window.supabase.createClient(
-  SUPABASE_CONFIG.url,
-  SUPABASE_CONFIG.publishableKey
-);
+const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.publishableKey);
 
 let currentUser = null;
 let isOwner = false;
 let selectedMode = null;
 
-// ─────────────────────────────────────────────
-// UTILS
-// ─────────────────────────────────────────────
-function toast(msg, duration = 2500) {
+function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 function fmtDate(iso) {
@@ -696,9 +280,47 @@ function totalDuration(from, to) {
   return mins / 60;
 }
 
-// ─────────────────────────────────────────────
-// AUTH
-// ─────────────────────────────────────────────
+async function initApp(user) {
+  try {
+    console.log('initApp started for:', user.email);
+    currentUser = user;
+
+    const { data: roleData, error: roleError } = await sb
+      .from('user_roles')
+      .select('role')
+      .eq('email', user.email.toLowerCase())
+      .maybeSingle();
+
+    console.log('Role data:', roleData);
+    console.log('Role error:', roleError);
+
+    isOwner = roleData?.role === 'owner';
+    console.log('isOwner:', isOwner);
+
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+
+    if (!isOwner) {
+      document.getElementById('viewer-badge').style.display = 'inline-flex';
+      document.getElementById('tab-log-btn').style.display = 'none';
+    }
+
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').textContent = 'Sign In';
+
+    console.log('Loading dashboard...');
+    await loadDashboard();
+    console.log('Loading entries...');
+    await loadAllEntries();
+    console.log('initApp complete');
+  } catch (err) {
+    console.error('initApp ERROR:', err);
+    alert('Init error: ' + (err.message || err));
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').textContent = 'Sign In';
+  }
+}
+
 document.getElementById('login-btn').addEventListener('click', async () => {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
@@ -718,6 +340,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
   if (error) {
+    console.error('Login error:', error);
     errEl.textContent = 'Incorrect email or password. Please try again.';
     errEl.style.display = 'block';
     btn.disabled = false;
@@ -725,10 +348,10 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     return;
   }
 
+  console.log('Login success, user:', data.user.email);
   await initApp(data.user);
 });
 
-// Allow Enter key on login
 document.getElementById('login-password').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('login-btn').click();
 });
@@ -741,79 +364,15 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-email').value = '';
   document.getElementById('login-password').value = '';
-  document.getElementById('login-error').style.display = 'none';
-  document.getElementById('login-btn').disabled = false;
-  document.getElementById('login-btn').textContent = 'Sign In';
-  document.getElementById('login-email').focus();
 });
-  
-// Check if already logged in on page load
-sb.auth.onAuthStateChange(async (event, session) => {
-  if (event === 'SIGNED_IN' && session?.user) {
+
+window.addEventListener('load', async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) {
     await initApp(session.user);
   }
-  if (event === 'SIGNED_OUT') {
-    currentUser = null;
-    isOwner = false;
-  }
 });
 
-// ─────────────────────────────────────────────
-// INIT APP AFTER LOGIN
-// ─────────────────────────────────────────────
-async function initApp(user) {
-  try {
-    console.log('initApp started for:', user.email);
-    currentUser = user;
-
-    // Check role
-    const { data: roleData, error: roleError } = await sb
-      .from('user_roles')
-      .select('role')
-      .eq('email', user.email.toLowerCase())
-      .single();
-
-    console.log('Role data:', roleData);
-    console.log('Role error:', roleError);
-
-    isOwner = roleData?.role === 'owner';
-    console.log('isOwner:', isOwner);
-
-    // Show app, hide login
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app-screen').style.display = 'block';
-
-    if (!isOwner) {
-      document.getElementById('viewer-badge').style.display = 'inline-flex';
-      document.getElementById('tab-log-btn').style.display = 'none';
-    }
-
-    // Reset login button in case of re-login
-    document.getElementById('login-btn').disabled = false;
-    document.getElementById('login-btn').textContent = 'Sign In';
-
-    // Load data
-    console.log('Loading dashboard...');
-    await loadDashboard();
-    console.log('Loading entries...');
-    await loadAllEntries();
-    console.log('initApp complete');
-  } catch (err) {
-    console.error('initApp ERROR:', err);
-    alert('Init error: ' + err.message);
-    document.getElementById('login-btn').disabled = false;
-    document.getElementById('login-btn').textContent = 'Sign In';
-  }
-}
-
-  // Load data
-  await loadDashboard();
-  await loadAllEntries();
-}
-
-// ─────────────────────────────────────────────
-// TABS
-// ─────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -824,27 +383,19 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ─────────────────────────────────────────────
-// DASHBOARD
-// ─────────────────────────────────────────────
 async function loadDashboard() {
   const grid = document.getElementById('balance-grid');
+  const { data, error } = await sb.from('balance_summary').select('*').single();
 
-  // Fetch balance summary from view
-  const { data, error } = await sb
-    .from('balance_summary')
-    .select('*')
-    .single();
-
-  if (error || !data) {
-    grid.innerHTML = `<div class="loading">Could not load balance.</div>`;
+  if (error) {
+    console.error('Balance error:', error);
+    grid.innerHTML = '<div class="loading">Could not load balance: ' + error.message + '</div>';
     return;
   }
 
-  const approved = data.total_ot_earned || 0;
-  const pending = data.total_compoff_pending || 0;
-  const used = data.total_compoff_used || 0;
-  const balance = data.available_balance || 0;
+  const approved = data?.total_ot_earned || 0;
+  const used = data?.total_compoff_used || 0;
+  const balance = data?.available_balance || 0;
 
   grid.innerHTML = `
     <div class="balance-card primary">
@@ -862,60 +413,38 @@ async function loadDashboard() {
     </div>
   `;
 
-  // Recent entries (last 5)
-  const { data: recent } = await sb
-    .from('entries')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(5);
-
+  const { data: recent } = await sb.from('entries').select('*').order('created_at', { ascending: false }).limit(5);
   document.getElementById('recent-count').textContent = 'Last 5';
   renderEntryList(recent || [], 'recent-list');
 }
 
-// ─────────────────────────────────────────────
-// ALL ENTRIES
-// ─────────────────────────────────────────────
 async function loadAllEntries() {
-  const { data, error } = await sb
-    .from('entries')
-    .select('*')
-    .order('entry_date', { ascending: false, nullsFirst: false });
-
+  const { data } = await sb.from('entries').select('*').order('entry_date', { ascending: false, nullsFirst: false });
   const count = data?.length || 0;
   const totalOT = (data || []).reduce((s, e) => s + (e.ot_hours || 0), 0);
   document.getElementById('all-count').textContent = `${count} entries · ${totalOT} hrs`;
   renderEntryList(data || [], 'all-list');
 }
 
-// ─────────────────────────────────────────────
-// RENDER ENTRY LIST
-// ─────────────────────────────────────────────
 function renderEntryList(entries, containerId) {
   const el = document.getElementById(containerId);
   if (entries.length === 0) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>No entries yet.</div>`;
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No entries yet.</div>';
     return;
   }
   el.innerHTML = entries.map(e => {
     const statusPill = e.status === 'approved'
-      ? `<span class="pill pill-approved">Approved</span>`
+      ? '<span class="pill pill-approved">Approved</span>'
       : e.status === 'rejected'
-      ? `<span class="pill pill-rejected">Rejected</span>`
-      : `<span class="pill pill-pending">Pending</span>`;
+      ? '<span class="pill pill-rejected">Rejected</span>'
+      : '<span class="pill pill-pending">Pending</span>';
     const modePill = `<span class="pill ${modePillClass(e.mode)}">${modeLabel(e.mode)}</span>`;
-    const timeStr = e.time_from && e.time_to
-      ? `${fmtTime(e.time_from)} – ${fmtTime(e.time_to)}`
-      : '';
+    const timeStr = e.time_from && e.time_to ? `${fmtTime(e.time_from)} – ${fmtTime(e.time_to)}` : '';
     const mailDate = e.mail_date ? `<span class="entry-mail-date">Mailed ${fmtDate(e.mail_date)}</span>` : '';
-    const deleteBtn = isOwner
-      ? `<button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')">Delete</button>`
-      : '';
-    const approveBtn = isOwner && e.status === 'logged'
-      ? `<button class="btn btn-secondary btn-sm" onclick="markApproved('${e.id}')">Mark Approved</button>`
-      : '';
+    const deleteBtn = isOwner ? `<button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')">Delete</button>` : '';
+    const approveBtn = isOwner && e.status === 'logged' ? `<button class="btn btn-secondary btn-sm" onclick="markApproved('${e.id}')">Mark Approved</button>` : '';
     return `
-      <div class="entry-card" id="entry-${e.id}">
+      <div class="entry-card">
         <div class="entry-top">
           <div>
             <div class="entry-date">${e.date_label || fmtDate(e.entry_date)}</div>
@@ -930,26 +459,14 @@ function renderEntryList(entries, containerId) {
         </div>
         <div class="entry-work">${e.work_done}</div>
         <div class="entry-footer">
-          <div class="entry-pills">
-            ${statusPill}
-            ${modePill}
-            ${mailDate}
-          </div>
-          <div class="entry-actions">
-            ${approveBtn}
-            ${deleteBtn}
-          </div>
+          <div class="entry-pills">${statusPill}${modePill}${mailDate}</div>
+          <div class="entry-actions">${approveBtn}${deleteBtn}</div>
         </div>
       </div>
     `;
   }).join('');
 }
 
-// ─────────────────────────────────────────────
-// LOG ENTRY FORM
-// ─────────────────────────────────────────────
-
-// Mode selection
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -959,7 +476,6 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
   });
 });
 
-// Date label toggle (show manual hours field)
 document.getElementById('f-label').addEventListener('input', () => {
   const hasLabel = document.getElementById('f-label').value.trim();
   document.getElementById('manual-row').style.display = hasLabel ? 'grid' : 'none';
@@ -1003,7 +519,6 @@ function updatePreview() {
   document.getElementById('prev-ot').textContent = `${ot} hrs`;
 }
 
-// Save entry
 document.getElementById('save-entry-btn').addEventListener('click', async () => {
   if (!isOwner) return;
 
@@ -1016,20 +531,17 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   const mailDate = document.getElementById('f-mail-date').value;
 
   if (!selectedMode) { toast('Please select a work mode'); return; }
-  if (!date && !label) { toast('Please enter a date or date range label'); return; }
-  if (!work) { toast('Please describe the work done'); return; }
+  if (!date && !label) { toast('Please enter a date'); return; }
+  if (!work) { toast('Please describe the work'); return; }
 
   let otHours;
   if (label && manual) {
     otHours = parseInt(manual);
   } else {
-    if (!from || !to) { toast('Please enter start and end times'); return; }
+    if (!from || !to) { toast('Please enter times'); return; }
     otHours = computeOT(from, to, selectedMode);
-    if (otHours <= 0 && selectedMode === 'wfo-normal') {
-      toast('Less than 8h30m worked — no OT earned on normal days');
-      return;
-    }
-    if (otHours <= 0) { toast('Duration must be at least 1 hour'); return; }
+    if (otHours <= 0 && selectedMode === 'wfo-normal') { toast('No OT earned on normal days < 8h30m'); return; }
+    if (otHours <= 0) { toast('Minimum 1 hour'); return; }
   }
 
   const btn = document.getElementById('save-entry-btn');
@@ -1052,12 +564,8 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   btn.disabled = false;
   btn.textContent = 'Save Entry';
 
-  if (error) {
-    toast('Error saving — ' + error.message);
-    return;
-  }
+  if (error) { toast('Error: ' + error.message); return; }
 
-  // Clear form
   document.getElementById('f-date').value = '';
   document.getElementById('f-label').value = '';
   document.getElementById('f-from').value = '';
@@ -1072,37 +580,28 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   toast('Entry saved ✓');
   await loadDashboard();
   await loadAllEntries();
-
-  // Switch to entries tab
   document.querySelector('[data-tab="entries"]').click();
 });
 
-// ─────────────────────────────────────────────
-// ACTIONS
-// ─────────────────────────────────────────────
 window.markApproved = async function(id) {
   if (!isOwner) return;
-  const { error } = await sb
-    .from('entries')
-    .update({ status: 'approved' })
-    .eq('id', id);
-  if (error) { toast('Error — ' + error.message); return; }
-  toast('Marked as approved ✓');
+  const { error } = await sb.from('entries').update({ status: 'approved' }).eq('id', id);
+  if (error) { toast('Error: ' + error.message); return; }
+  toast('Approved ✓');
   await loadDashboard();
   await loadAllEntries();
 };
 
 window.deleteEntry = async function(id) {
   if (!isOwner) return;
-  if (!confirm('Delete this entry? This cannot be undone.')) return;
+  if (!confirm('Delete this entry?')) return;
   const { error } = await sb.from('entries').delete().eq('id', id);
-  if (error) { toast('Error — ' + error.message); return; }
-  toast('Entry deleted');
+  if (error) { toast('Error: ' + error.message); return; }
+  toast('Deleted');
   await loadDashboard();
   await loadAllEntries();
 };
 
-// Set today's date as default
 document.getElementById('f-date').valueAsDate = new Date();
 </script>
 </body>
