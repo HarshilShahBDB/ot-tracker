@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>OT Tracker · Harshil Shah</title>
+<title>BDB 341 | OT Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -11,128 +11,172 @@
 <script src="config.js"></script>
 <style>
 :root {
-  --bg: #f8f7f4;
+  --navy: #1a2c4f;
+  --navy-dark: #122039;
+  --navy-light: #2a4070;
+  --bg: #f5f5f7;
   --surface: #ffffff;
-  --surface-2: #f2f0eb;
-  --line: #e4e0d8;
-  --ink: #1a1916;
-  --ink-soft: #4a4740;
-  --muted: #9a9590;
-  --gold: #b8860b;
-  --gold-soft: #f5f0e0;
-  --green: #2d6a2d;
-  --green-soft: #e8f5e8;
-  --red: #8b2020;
-  --red-soft: #fdeaea;
-  --blue: #1a4a8b;
+  --surface-2: #fafafa;
+  --line: #e8e8ec;
+  --line-strong: #d4d4d8;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4f;
+  --muted: #8a8a90;
+  --blue: #2d5db8;
   --blue-soft: #e8f0fd;
-  --orange: #8b4a10;
-  --orange-soft: #fdf0e8;
+  --green: #2d7a3f;
+  --green-soft: #e6f4e9;
+  --amber: #c08920;
+  --amber-soft: #fdf2dc;
+  --red: #c93030;
+  --red-soft: #fce8e8;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
-.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-.login-box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 40px 32px; width: 100%; max-width: 400px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-.login-brand { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
-.login-title { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); }
+.login-box { background: var(--surface); border-radius: 12px; padding: 44px 36px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.login-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--navy); text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.login-title { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 6px; }
 .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
-.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.field label { font-size: 12px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.02em; }
-.field input { font-family: 'Inter', sans-serif; font-size: 15px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-.field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
-.btn { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 13px 20px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-.btn-primary { background: var(--ink); color: white; width: 100%; }
-.btn-primary:hover { background: #333; }
+.field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+.field label { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; }
+.field input { font-family: 'Inter', sans-serif; font-size: 15px; padding: 13px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--bg); color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+.field input:focus { border-color: var(--navy); background: white; box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
+.btn { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 13px 20px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary { background: var(--navy); color: white; width: 100%; }
+.btn-primary:hover { background: var(--navy-dark); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
-.btn-secondary:hover { border-color: var(--ink); }
-.btn-danger { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; }
-.btn-danger:hover { background: #fad5d5; }
-.btn-sm { padding: 7px 14px; font-size: 12px; }
-.login-error { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
-.app { display: none; max-width: 800px; margin: 0 auto; padding: 0 0 80px; }
-.topbar { position: sticky; top: 0; z-index: 50; background: rgba(248,247,244,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.topbar-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 500; }
-.topbar-right { display: flex; align-items: center; gap: 10px; }
-.viewer-badge { background: var(--blue-soft); color: var(--blue); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; border: 1px solid #c5d8f8; }
-.logout-btn { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 6px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; }
-.logout-btn:hover { background: var(--surface-2); color: var(--ink); }
-.main { padding: 24px 20px; }
-.balance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-.balance-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
-.balance-card.primary { grid-column: 1 / -1; background: var(--ink); color: white; border-color: var(--ink); }
-.bal-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.balance-card.primary .bal-label { color: rgba(255,255,255,0.5); }
-.bal-num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.balance-card.primary .bal-num { color: #f0c060; }
-.bal-unit { font-size: 13px; font-weight: 400; margin-left: 3px; color: var(--muted); }
-.balance-card.primary .bal-unit { color: rgba(255,255,255,0.4); }
-.bal-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.balance-card.primary .bal-sub { color: rgba(255,255,255,0.4); }
-.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; margin-top: 28px; }
-.section-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-.section-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
-.form-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
-.mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-.mode-btn { padding: 10px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Inter', sans-serif; }
-.mode-btn:hover { border-color: var(--gold); }
-.mode-btn.active { border-color: var(--gold); background: var(--gold-soft); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
-.mode-btn .mode-name { font-size: 12px; font-weight: 600; color: var(--ink); }
-.mode-btn .mode-desc { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-strong); }
+.btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+.btn-danger { background: white; color: var(--red); border: 1px solid #f0c8c8; }
+.btn-danger:hover { background: var(--red-soft); }
+.btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 6px; }
+.login-error { background: var(--red-soft); color: var(--red); border: 1px solid #f0c8c8; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
+.app { display: none; min-height: 100vh; }
+.header-bar { background: var(--navy); color: white; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,44,79,0.15); }
+.header-brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; }
+.header-brand .pipe { color: rgba(255,255,255,0.4); font-weight: 300; margin: 0 6px; }
+.header-brand .lite { font-weight: 400; opacity: 0.85; }
+.header-search { flex: 1; max-width: 400px; margin: 0 32px; display: flex; align-items: center; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0 14px; height: 38px; }
+.header-search svg { width: 14px; height: 14px; stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 2; }
+.header-search input { background: none; border: none; outline: none; color: white; font-family: 'Inter', sans-serif; font-size: 13px; padding: 0 10px; width: 100%; }
+.header-search input::placeholder { color: rgba(255,255,255,0.5); }
+.header-right { display: flex; align-items: center; gap: 14px; }
+.viewer-badge { background: rgba(255,255,255,0.15); color: white; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 11px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
+.logout-btn { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); cursor: pointer; padding: 7px 14px; border-radius: 6px; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+.logout-btn:hover { background: rgba(255,255,255,0.18); }
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
+.sidebar { background: var(--surface); border-right: 1px solid var(--line); padding: 24px 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; }
+.sidebar-section { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; padding: 12px 24px 8px; font-weight: 500; }
+.nav-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 24px; color: var(--ink-soft); font-size: 14px; cursor: pointer; transition: background 0.15s, color 0.15s; border-left: 3px solid transparent; font-weight: 500; background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
+.nav-item:hover { background: var(--surface-2); color: var(--ink); }
+.nav-item.active { background: var(--blue-soft); color: var(--navy); border-left-color: var(--navy); font-weight: 600; }
+.nav-item .badge { background: var(--line); color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+.nav-item.active .badge { background: var(--navy); color: white; }
+.main { padding: 32px 40px; max-width: 100%; overflow-x: hidden; }
+.page-header { margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.page-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.page-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+.page-meta strong { color: var(--ink); font-weight: 600; }
+.stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.stat-card.primary { background: var(--navy); color: white; border-color: var(--navy); }
+.stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+.stat-card.primary .stat-label { color: rgba(255,255,255,0.65); }
+.stat-num { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.stat-unit { font-size: 13px; font-weight: 400; margin-left: 4px; color: var(--muted); }
+.stat-card.primary .stat-unit { color: rgba(255,255,255,0.5); }
+.stat-sub { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+.stat-card.primary .stat-sub { color: rgba(255,255,255,0.55); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+.card-title { font-size: 16px; font-weight: 600; color: var(--ink); }
+.card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+.mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.mode-btn { padding: 14px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+.mode-btn:hover { border-color: var(--navy); background: var(--surface-2); }
+.mode-btn.active { border-color: var(--navy); background: var(--blue-soft); box-shadow: 0 0 0 3px rgba(26,44,79,0.06); }
+.mode-btn .mode-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.mode-btn .mode-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
 .form-row.full { grid-template-columns: 1fr; }
-.form-field { display: flex; flex-direction: column; gap: 5px; }
-.form-label { font-size: 11px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.03em; text-transform: uppercase; }
-.form-input { font-family: 'Inter', sans-serif; font-size: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
-.form-input:focus { border-color: var(--gold); }
-textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; }
-.ot-preview { background: var(--gold-soft); border: 1px solid #e8d898; border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; display: none; }
-.ot-preview-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
-.ot-preview-row span:first-child { color: var(--ink-soft); }
-.ot-preview-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
-.ot-preview-row.total span { font-weight: 700; font-size: 14px; color: var(--gold); }
-.pill { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
-.pill-pending { background: var(--orange-soft); color: var(--orange); border: 1px solid #f0d0b0; }
-.pill-approved { background: var(--green-soft); color: var(--green); border: 1px solid #b8ddb8; }
-.pill-rejected { background: var(--red-soft); color: var(--red); border: 1px solid #f5c6c6; }
-.pill-wfo-normal { background: var(--blue-soft); color: var(--blue); border: 1px solid #c5d8f8; }
-.pill-wfo-holiday { background: var(--orange-soft); color: var(--orange); border: 1px solid #f0d0b0; }
-.pill-wfh { background: var(--green-soft); color: var(--green); border: 1px solid #b8ddb8; }
-.entry-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 10px; transition: box-shadow 0.15s; }
-.entry-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-.entry-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; }
+.form-label .hint { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; }
+.form-input { font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); color: var(--ink); outline: none; transition: all 0.2s; width: 100%; }
+.form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
+textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; }
+.ot-preview { background: var(--blue-soft); border: 1px solid #c5d8f8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; display: none; }
+.ot-preview-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--ink-soft); }
+.ot-preview-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.ot-preview-row.total { border-top: 1px solid rgba(26,44,79,0.15); margin-top: 6px; padding-top: 10px; }
+.ot-preview-row.total span { font-weight: 700; color: var(--navy); font-size: 15px; }
+.pill { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+.pill-pending { background: var(--amber-soft); color: var(--amber); }
+.pill-approved { background: var(--green-soft); color: var(--green); }
+.pill-rejected { background: var(--red-soft); color: var(--red); }
+.pill-wfo-normal { background: var(--blue-soft); color: var(--navy); }
+.pill-wfo-holiday { background: #fde8d8; color: #a04020; }
+.pill-wfh { background: var(--green-soft); color: var(--green); }
+.entry-row { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 18px; align-items: center; transition: all 0.15s; }
+.entry-row:hover { border-color: var(--navy-light); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.entry-date-block { min-width: 90px; }
 .entry-date { font-size: 13px; font-weight: 600; color: var(--ink); }
 .entry-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
-.entry-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.entry-hours { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 600; color: var(--ink); }
-.entry-hrs-label { font-size: 10px; color: var(--muted); }
-.entry-work { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 10px; }
-.entry-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-.entry-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.entry-body { min-width: 0; }
+.entry-work { font-size: 13px; color: var(--ink); line-height: 1.5; margin-bottom: 6px; }
+.entry-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.entry-mail-tag { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.entry-hours { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--navy); text-align: right; }
+.entry-hours-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
 .entry-actions { display: flex; gap: 6px; }
-.entry-mail-date { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-.empty { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 14px; }
-.empty-icon { font-size: 32px; margin-bottom: 12px; }
-.tabbar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(248,247,244,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--line); display: flex; z-index: 50; max-width: 800px; margin: 0 auto; }
-.tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--muted); transition: color 0.15s; gap: 4px; font-size: 10px; font-weight: 500; letter-spacing: 0.03em; }
-.tab-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.tab-btn.active { color: var(--ink); }
-.tab-btn.active svg { stroke-width: 2.2; }
+.empty { text-align: center; padding: 56px 20px; color: var(--muted); }
+.empty-icon { width: 48px; height: 48px; margin: 0 auto 16px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+.empty-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+.empty-text { font-size: 14px; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
+.empty-hint { font-size: 12px; }
+.loading { display: flex; align-items: center; justify-content: center; padding: 50px; color: var(--muted); font-size: 13px; gap: 12px; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: white; padding: 13px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: white; padding: 12px 20px; border-radius: 24px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--muted); font-size: 13px; gap: 10px; }
-.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (min-width: 600px) { .main { padding: 32px; } .topbar { padding: 0 32px; } }
+.mobile-tabs { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 100; }
+.mobile-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--muted); gap: 4px; font-size: 10px; font-weight: 500; }
+.mobile-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mobile-tab.active { color: var(--navy); }
+.mobile-tab.active svg { stroke-width: 2.2; }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .header-search { display: none; }
+  .main { padding: 20px 16px 90px; }
+  .stat-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-card { padding: 14px 16px; }
+  .stat-num { font-size: 26px; }
+  .form-row { grid-template-columns: 1fr; }
+  .mode-grid { grid-template-columns: 1fr; gap: 8px; }
+  .mobile-tabs { display: flex; }
+  .header-bar { padding: 0 18px; height: 56px; }
+  .header-brand { font-size: 15px; }
+  .page-header { margin-bottom: 20px; }
+  .page-title { font-size: 20px; }
+  .entry-row { grid-template-columns: 1fr auto; gap: 12px; padding: 14px; }
+  .entry-date-block { grid-column: 1 / 2; }
+  .entry-hours-block { grid-column: 2 / 3; grid-row: 1; text-align: right; }
+  .entry-body { grid-column: 1 / -1; }
+  .entry-actions { grid-column: 1 / -1; justify-content: flex-end; }
+  .card { padding: 18px; }
+}
 </style>
 </head>
 <body>
 
 <div class="login-wrap" id="login-screen">
   <div class="login-box">
-    <div class="login-brand">◆ BDB341 · OT Tracker</div>
+    <div class="login-brand">◆ BDB 341 · OT Tracker</div>
     <div class="login-title">Sign in</div>
     <div class="login-sub">Harshil Shah · Communications & Event Production</div>
     <div class="login-error" id="login-error"></div>
@@ -149,81 +193,140 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
 </div>
 
 <div class="app" id="app-screen">
-  <div class="topbar">
-    <div class="topbar-brand">◆ OT Ledger</div>
-    <div class="topbar-right">
+  <div class="header-bar">
+    <div class="header-brand"><span>BDB 341</span><span class="pipe">|</span><span class="lite">OT Tracker</span></div>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search entries..." id="search-input">
+    </div>
+    <div class="header-right">
       <span class="viewer-badge" id="viewer-badge" style="display:none;">View Only</span>
       <button class="logout-btn" id="logout-btn">Sign out</button>
     </div>
   </div>
-  <div class="main">
-    <div class="tab-content active" id="tab-dashboard">
-      <div class="balance-grid" id="balance-grid">
-        <div class="loading"><div class="spinner"></div> Loading…</div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">Overview</div>
+      <button class="nav-item active" data-tab="dashboard"><span>Dashboard</span></button>
+      <button class="nav-item" data-tab="entries"><span>All Entries</span><span class="badge" id="nav-entries-count">0</span></button>
+      <div class="sidebar-section" id="actions-section">Actions</div>
+      <button class="nav-item" data-tab="log" id="nav-log-btn"><span>Log Overtime</span></button>
+      <button class="nav-item" data-tab="compoff" id="nav-compoff-btn"><span>Apply Comp-Off</span></button>
+      <div class="sidebar-section">Account</div>
+      <button class="nav-item" data-tab="account"><span>Settings</span></button>
+    </aside>
+
+    <main class="main">
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="page-header">
+          <div class="page-title">Dashboard</div>
+          <div class="page-meta" id="page-meta-dashboard">—</div>
+        </div>
+        <div class="stat-strip" id="stat-strip">
+          <div class="loading"><div class="spinner"></div> Loading…</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Entries</div>
+            <div class="card-meta">Last 5</div>
+          </div>
+          <div id="recent-list"><div class="loading"><div class="spinner"></div></div></div>
+        </div>
       </div>
-      <div class="section-header">
-        <div class="section-title">Recent Entries</div>
-        <div class="section-count" id="recent-count"></div>
+
+      <div class="tab-content" id="tab-entries">
+        <div class="page-header">
+          <div class="page-title">All Entries</div>
+          <div class="page-meta" id="page-meta-entries">—</div>
+        </div>
+        <div class="card">
+          <div id="all-list"><div class="loading"><div class="spinner"></div></div></div>
+        </div>
       </div>
-      <div id="recent-list"><div class="loading"><div class="spinner"></div></div></div>
-    </div>
-    <div class="tab-content" id="tab-log">
-      <div class="section-header" style="margin-top:0">
-        <div class="section-title">Log Overtime</div>
+
+      <div class="tab-content" id="tab-log">
+        <div class="page-header">
+          <div class="page-title">Log Overtime</div>
+          <div class="page-meta">Record a new overtime entry</div>
+        </div>
+        <div class="card">
+          <div class="form-label" style="margin-bottom:10px;">Work Mode</div>
+          <div class="mode-grid">
+            <div class="mode-btn" data-mode="wfo-normal"><div class="mode-name">Office</div><div class="mode-desc">Normal · 8h30 deducted</div></div>
+            <div class="mode-btn" data-mode="wfo-holiday"><div class="mode-name">Office</div><div class="mode-desc">Holiday · full = OT</div></div>
+            <div class="mode-btn" data-mode="wfh"><div class="mode-name">WFH</div><div class="mode-desc">Full time = OT</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-field"><label class="form-label">Date</label><input type="date" class="form-input" id="f-date"></div>
+            <div class="form-field"><label class="form-label">Date Range Label <span class="hint">(optional)</span></label><input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr"></div>
+          </div>
+          <div class="form-row" id="time-row">
+            <div class="form-field"><label class="form-label">From</label><input type="time" class="form-input" id="f-from"></div>
+            <div class="form-field"><label class="form-label">To</label><input type="time" class="form-input" id="f-to"></div>
+          </div>
+          <div class="form-row full" id="manual-row" style="display:none;">
+            <div class="form-field"><label class="form-label">Total OT Hours</label><input type="number" class="form-input" id="f-manual" min="1" max="200"></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-field"><label class="form-label">Work Done</label><textarea class="form-input" id="f-work" placeholder="Describe what you worked on…"></textarea></div>
+          </div>
+          <div class="form-row">
+            <div class="form-field"><label class="form-label">Dated Mail <span class="hint">(date emailed manager)</span></label><input type="date" class="form-input" id="f-mail-date"></div>
+            <div class="form-field"></div>
+          </div>
+          <div class="ot-preview" id="ot-preview">
+            <div class="ot-preview-row"><span>Total duration</span><span id="prev-duration">—</span></div>
+            <div class="ot-preview-row" id="prev-deduct-row"><span>Shift deduction</span><span>− 8h 30m</span></div>
+            <div class="ot-preview-row total"><span>OT credited</span><span id="prev-ot">—</span></div>
+          </div>
+          <button class="btn btn-primary" id="save-entry-btn" style="width:auto;padding:13px 32px;">Save Entry</button>
+        </div>
       </div>
-      <div class="form-card">
-        <div class="form-label" style="margin-bottom:10px;">Work Mode</div>
-        <div class="mode-grid">
-          <div class="mode-btn" data-mode="wfo-normal"><div class="mode-name">Office</div><div class="mode-desc">Normal · 8h30 deducted</div></div>
-          <div class="mode-btn" data-mode="wfo-holiday"><div class="mode-name">Office</div><div class="mode-desc">Holiday · full = OT</div></div>
-          <div class="mode-btn" data-mode="wfh"><div class="mode-name">WFH</div><div class="mode-desc">Full time = OT</div></div>
+
+      <div class="tab-content" id="tab-compoff">
+        <div class="page-header">
+          <div class="page-title">Apply Comp-Off</div>
+          <div class="page-meta">Coming next session</div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label class="form-label">Date</label><input type="date" class="form-input" id="f-date"></div>
-          <div class="form-field"><label class="form-label">Date Range Label</label><input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr"></div>
+        <div class="card">
+          <div class="empty">
+            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div>
+            <div class="empty-text">Comp-off calculator coming soon</div>
+            <div class="empty-hint">This feature will be added in the next session.</div>
+          </div>
         </div>
-        <div class="form-row" id="time-row">
-          <div class="form-field"><label class="form-label">From</label><input type="time" class="form-input" id="f-from"></div>
-          <div class="form-field"><label class="form-label">To</label><input type="time" class="form-input" id="f-to"></div>
-        </div>
-        <div class="form-row full" id="manual-row" style="display:none;">
-          <div class="form-field"><label class="form-label">Total OT Hours</label><input type="number" class="form-input" id="f-manual" min="1" max="200"></div>
-        </div>
-        <div class="form-row full">
-          <div class="form-field"><label class="form-label">Work Done</label><textarea class="form-input" id="f-work" placeholder="Describe what you worked on…"></textarea></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label class="form-label">Dated Mail</label><input type="date" class="form-input" id="f-mail-date"></div>
-          <div class="form-field"></div>
-        </div>
-        <div class="ot-preview" id="ot-preview">
-          <div class="ot-preview-row"><span>Total duration</span><span id="prev-duration">—</span></div>
-          <div class="ot-preview-row" id="prev-deduct-row"><span>Shift deduction</span><span>− 8h 30m</span></div>
-          <div class="ot-preview-row total"><span>OT credited</span><span id="prev-ot">—</span></div>
-        </div>
-        <button class="btn btn-primary" id="save-entry-btn">Save Entry</button>
       </div>
-    </div>
-    <div class="tab-content" id="tab-entries">
-      <div class="section-header" style="margin-top:0;">
-        <div class="section-title">All Entries</div>
-        <div class="section-count" id="all-count"></div>
+
+      <div class="tab-content" id="tab-account">
+        <div class="page-header"><div class="page-title">Settings</div></div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Account</div></div>
+          <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+            <div style="margin-bottom:8px;"><strong>Logged in as:</strong> <span id="account-email">—</span></div>
+            <div><strong>Role:</strong> <span id="account-role">—</span></div>
+          </div>
+        </div>
       </div>
-      <div id="all-list"><div class="loading"><div class="spinner"></div></div></div>
-    </div>
+    </main>
   </div>
-  <nav class="tabbar" id="tabbar">
-    <button class="tab-btn active" data-tab="dashboard">
+
+  <nav class="mobile-tabs">
+    <button class="mobile-tab active" data-tab="dashboard">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
+      Home
     </button>
-    <button class="tab-btn" data-tab="log" id="tab-log-btn">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      Log OT
-    </button>
-    <button class="tab-btn" data-tab="entries">
+    <button class="mobile-tab" data-tab="entries">
       <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
       Entries
+    </button>
+    <button class="mobile-tab" data-tab="log" id="mobile-log-btn">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Log
+    </button>
+    <button class="mobile-tab" data-tab="account">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      Account
     </button>
   </nav>
 </div>
@@ -232,7 +335,6 @@ textarea.form-input { resize: vertical; min-height: 72px; font-family: inherit; 
 
 <script>
 const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.publishableKey);
-
 let currentUser = null;
 let isOwner = false;
 let selectedMode = null;
@@ -251,14 +353,8 @@ function fmtDate(iso) {
 }
 
 function fmtTime(t) { return t ? t.slice(0,5) : ''; }
-
-function modeLabel(m) {
-  return { 'wfo-normal': 'Office · Normal', 'wfo-holiday': 'Office · Holiday', 'wfh': 'WFH' }[m] || m;
-}
-
-function modePillClass(m) {
-  return { 'wfo-normal': 'pill-wfo-normal', 'wfo-holiday': 'pill-wfo-holiday', 'wfh': 'pill-wfh' }[m] || '';
-}
+function modeLabel(m) { return { 'wfo-normal': 'Office', 'wfo-holiday': 'Holiday', 'wfh': 'WFH' }[m] || m; }
+function modePillClass(m) { return { 'wfo-normal': 'pill-wfo-normal', 'wfo-holiday': 'pill-wfo-holiday', 'wfh': 'pill-wfh' }[m] || ''; }
 
 function computeOT(from, to, mode) {
   if (!from || !to) return 0;
@@ -282,37 +378,28 @@ function totalDuration(from, to) {
 
 async function initApp(user) {
   try {
-    console.log('initApp started for:', user.email);
     currentUser = user;
-
-    const { data: roleData, error: roleError } = await sb
-      .from('user_roles')
-      .select('role')
-      .eq('email', user.email.toLowerCase())
-      .maybeSingle();
-
-    console.log('Role data:', roleData);
-    console.log('Role error:', roleError);
-
+    const { data: roleData } = await sb.from('user_roles').select('role').eq('email', user.email.toLowerCase()).maybeSingle();
     isOwner = roleData?.role === 'owner';
-    console.log('isOwner:', isOwner);
 
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-screen').style.display = 'block';
+    document.getElementById('account-email').textContent = user.email;
+    document.getElementById('account-role').textContent = isOwner ? 'Owner (full access)' : 'Viewer (read-only)';
 
     if (!isOwner) {
       document.getElementById('viewer-badge').style.display = 'inline-flex';
-      document.getElementById('tab-log-btn').style.display = 'none';
+      document.getElementById('nav-log-btn').style.display = 'none';
+      document.getElementById('nav-compoff-btn').style.display = 'none';
+      document.getElementById('mobile-log-btn').style.display = 'none';
+      document.getElementById('actions-section').style.display = 'none';
     }
 
     document.getElementById('login-btn').disabled = false;
     document.getElementById('login-btn').textContent = 'Sign In';
 
-    console.log('Loading dashboard...');
     await loadDashboard();
-    console.log('Loading entries...');
     await loadAllEntries();
-    console.log('initApp complete');
   } catch (err) {
     console.error('initApp ERROR:', err);
     alert('Init error: ' + (err.message || err));
@@ -340,15 +427,12 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
   if (error) {
-    console.error('Login error:', error);
-    errEl.textContent = 'Incorrect email or password. Please try again.';
+    errEl.textContent = 'Incorrect email or password.';
     errEl.style.display = 'block';
     btn.disabled = false;
     btn.textContent = 'Sign In';
     return;
   }
-
-  console.log('Login success, user:', data.user.email);
   await initApp(data.user);
 });
 
@@ -368,53 +452,58 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 
 window.addEventListener('load', async () => {
   const { data: { session } } = await sb.auth.getSession();
-  if (session?.user) {
-    await initApp(session.user);
-  }
+  if (session?.user) await initApp(session.user);
 });
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + tab).classList.add('active');
-  });
+function switchTab(tab) {
+  document.querySelectorAll('.nav-item, .mobile-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('[data-tab="' + tab + '"]').forEach(b => b.classList.add('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+document.querySelectorAll('.nav-item, .mobile-tab').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
 
 async function loadDashboard() {
-  const grid = document.getElementById('balance-grid');
+  const grid = document.getElementById('stat-strip');
   const { data, error } = await sb.from('balance_summary').select('*').single();
 
   if (error) {
-    console.error('Balance error:', error);
-    grid.innerHTML = '<div class="loading">Could not load balance: ' + error.message + '</div>';
+    grid.innerHTML = '<div class="loading">Could not load balance.</div>';
     return;
   }
 
   const approved = data?.total_ot_earned || 0;
   const used = data?.total_compoff_used || 0;
   const balance = data?.available_balance || 0;
+  const pending = data?.total_compoff_pending || 0;
 
-  grid.innerHTML = `
-    <div class="balance-card primary">
-      <div class="bal-label">Available Balance</div>
-      <div><span class="bal-num">${balance}</span><span class="bal-unit">hrs</span></div>
-      <div class="bal-sub">${approved} earned · ${used} used</div>
-    </div>
-    <div class="balance-card">
-      <div class="bal-label">OT Earned</div>
-      <div><span class="bal-num" style="font-size:28px;">${approved}</span><span class="bal-unit">hrs</span></div>
-    </div>
-    <div class="balance-card">
-      <div class="bal-label">Comp Used</div>
-      <div><span class="bal-num" style="font-size:28px;">${used}</span><span class="bal-unit">hrs</span></div>
-    </div>
-  `;
+  grid.innerHTML =
+    '<div class="stat-card primary">' +
+      '<div class="stat-label">Available Balance</div>' +
+      '<div><span class="stat-num">' + balance + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">' + approved + ' earned − ' + used + ' used</div>' +
+    '</div>' +
+    '<div class="stat-card">' +
+      '<div class="stat-label">OT Earned</div>' +
+      '<div><span class="stat-num">' + approved + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">All time</div>' +
+    '</div>' +
+    '<div class="stat-card">' +
+      '<div class="stat-label">Comp Used</div>' +
+      '<div><span class="stat-num">' + used + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">All time</div>' +
+    '</div>' +
+    '<div class="stat-card">' +
+      '<div class="stat-label">Pending Comp</div>' +
+      '<div><span class="stat-num">' + pending + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">Awaiting decision</div>' +
+    '</div>';
+
+  document.getElementById('page-meta-dashboard').innerHTML = '<strong>' + approved + '</strong> hrs earned · <strong>' + balance + '</strong> hrs available';
 
   const { data: recent } = await sb.from('entries').select('*').order('created_at', { ascending: false }).limit(5);
-  document.getElementById('recent-count').textContent = 'Last 5';
   renderEntryList(recent || [], 'recent-list');
 }
 
@@ -422,48 +511,46 @@ async function loadAllEntries() {
   const { data } = await sb.from('entries').select('*').order('entry_date', { ascending: false, nullsFirst: false });
   const count = data?.length || 0;
   const totalOT = (data || []).reduce((s, e) => s + (e.ot_hours || 0), 0);
-  document.getElementById('all-count').textContent = `${count} entries · ${totalOT} hrs`;
+  document.getElementById('page-meta-entries').innerHTML = '<strong>' + count + '</strong> entries · <strong>' + totalOT + '</strong> OT hours';
+  document.getElementById('nav-entries-count').textContent = count;
   renderEntryList(data || [], 'all-list');
 }
 
 function renderEntryList(entries, containerId) {
   const el = document.getElementById(containerId);
   if (entries.length === 0) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No entries yet.</div>';
+    el.innerHTML =
+      '<div class="empty">' +
+        '<div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>' +
+        '<div class="empty-text">No entries yet</div>' +
+        '<div class="empty-hint">' + (isOwner ? 'Click "Log Overtime" to add your first entry.' : 'No entries to view.') + '</div>' +
+      '</div>';
     return;
   }
   el.innerHTML = entries.map(e => {
-    const statusPill = e.status === 'approved'
-      ? '<span class="pill pill-approved">Approved</span>'
-      : e.status === 'rejected'
-      ? '<span class="pill pill-rejected">Rejected</span>'
+    const statusPill = e.status === 'approved' ? '<span class="pill pill-approved">Approved</span>'
+      : e.status === 'rejected' ? '<span class="pill pill-rejected">Rejected</span>'
       : '<span class="pill pill-pending">Pending</span>';
-    const modePill = `<span class="pill ${modePillClass(e.mode)}">${modeLabel(e.mode)}</span>`;
-    const timeStr = e.time_from && e.time_to ? `${fmtTime(e.time_from)} – ${fmtTime(e.time_to)}` : '';
-    const mailDate = e.mail_date ? `<span class="entry-mail-date">Mailed ${fmtDate(e.mail_date)}</span>` : '';
-    const deleteBtn = isOwner ? `<button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')">Delete</button>` : '';
-    const approveBtn = isOwner && e.status === 'logged' ? `<button class="btn btn-secondary btn-sm" onclick="markApproved('${e.id}')">Mark Approved</button>` : '';
-    return `
-      <div class="entry-card">
-        <div class="entry-top">
-          <div>
-            <div class="entry-date">${e.date_label || fmtDate(e.entry_date)}</div>
-            ${timeStr ? `<div class="entry-time">${timeStr}</div>` : ''}
-          </div>
-          <div class="entry-right">
-            <div>
-              <div class="entry-hours">${e.ot_hours}</div>
-              <div class="entry-hrs-label">hrs OT</div>
-            </div>
-          </div>
-        </div>
-        <div class="entry-work">${e.work_done}</div>
-        <div class="entry-footer">
-          <div class="entry-pills">${statusPill}${modePill}${mailDate}</div>
-          <div class="entry-actions">${approveBtn}${deleteBtn}</div>
-        </div>
-      </div>
-    `;
+    const modePill = '<span class="pill ' + modePillClass(e.mode) + '">' + modeLabel(e.mode) + '</span>';
+    const timeStr = e.time_from && e.time_to ? fmtTime(e.time_from) + ' – ' + fmtTime(e.time_to) : '';
+    const mailDate = e.mail_date ? '<span class="entry-mail-tag">Mailed ' + fmtDate(e.mail_date) + '</span>' : '';
+    const deleteBtn = isOwner ? '<button class="btn btn-danger btn-sm" onclick="deleteEntry(\'' + e.id + '\')">Delete</button>' : '';
+    const approveBtn = isOwner && e.status === 'logged' ? '<button class="btn btn-secondary btn-sm" onclick="markApproved(\'' + e.id + '\')">Approve</button>' : '';
+    return '<div class="entry-row">' +
+      '<div class="entry-date-block">' +
+        '<div class="entry-date">' + (e.date_label || fmtDate(e.entry_date)) + '</div>' +
+        (timeStr ? '<div class="entry-time">' + timeStr + '</div>' : '') +
+      '</div>' +
+      '<div class="entry-body">' +
+        '<div class="entry-work">' + e.work_done + '</div>' +
+        '<div class="entry-tags">' + statusPill + modePill + mailDate + '</div>' +
+      '</div>' +
+      '<div class="entry-hours-block">' +
+        '<div class="entry-hours">' + e.ot_hours + '</div>' +
+        '<div class="entry-hours-label">OT hrs</div>' +
+      '</div>' +
+      ((approveBtn || deleteBtn) ? '<div class="entry-actions">' + approveBtn + deleteBtn + '</div>' : '') +
+    '</div>';
   }).join('');
 }
 
@@ -495,33 +582,28 @@ function updatePreview() {
   const to = document.getElementById('f-to').value;
 
   if (!selectedMode) { preview.style.display = 'none'; return; }
-
   if (hasLabel && manual) {
     preview.style.display = 'block';
-    document.getElementById('prev-duration').textContent = `${manual} hrs (manual)`;
+    document.getElementById('prev-duration').textContent = manual + ' hrs (manual)';
     document.getElementById('prev-deduct-row').style.display = 'none';
-    document.getElementById('prev-ot').textContent = `${manual} hrs`;
+    document.getElementById('prev-ot').textContent = manual + ' hrs';
     return;
   }
-
   if (!from || !to) { preview.style.display = 'none'; return; }
-
   const dur = totalDuration(from, to);
   const ot = computeOT(from, to, selectedMode);
   preview.style.display = 'block';
-  document.getElementById('prev-duration').textContent = `${dur.toFixed(1)} hrs`;
-
+  document.getElementById('prev-duration').textContent = dur.toFixed(1) + ' hrs';
   if (selectedMode === 'wfo-normal') {
     document.getElementById('prev-deduct-row').style.display = 'flex';
   } else {
     document.getElementById('prev-deduct-row').style.display = 'none';
   }
-  document.getElementById('prev-ot').textContent = `${ot} hrs`;
+  document.getElementById('prev-ot').textContent = ot + ' hrs';
 }
 
 document.getElementById('save-entry-btn').addEventListener('click', async () => {
   if (!isOwner) return;
-
   const date = document.getElementById('f-date').value;
   const label = document.getElementById('f-label').value.trim();
   const from = document.getElementById('f-from').value;
@@ -580,7 +662,7 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   toast('Entry saved ✓');
   await loadDashboard();
   await loadAllEntries();
-  document.querySelector('[data-tab="entries"]').click();
+  switchTab('entries');
 });
 
 window.markApproved = async function(id) {
