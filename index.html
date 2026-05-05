@@ -44,15 +44,19 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .field input { font-family: 'Inter', sans-serif; font-size: 15px; padding: 13px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--bg); color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
 .field input:focus { border-color: var(--navy); background: white; box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
 .btn { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 13px 20px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-.btn-primary { background: var(--navy); color: white; width: 100%; }
+.btn-primary { background: var(--navy); color: white; }
 .btn-primary:hover { background: var(--navy-dark); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary.full { width: 100%; }
 .btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-strong); }
 .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
 .btn-danger { background: white; color: var(--red); border: 1px solid #f0c8c8; }
 .btn-danger:hover { background: var(--red-soft); }
+.btn-success { background: var(--green); color: white; }
+.btn-success:hover { background: #1f5a30; }
 .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 6px; }
 .login-error { background: var(--red-soft); color: var(--red); border: 1px solid #f0c8c8; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
+
 .app { display: none; min-height: 100vh; }
 .header-bar { background: var(--navy); color: white; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,44,79,0.15); }
 .header-brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; }
@@ -66,6 +70,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .viewer-badge { background: rgba(255,255,255,0.15); color: white; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 11px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
 .logout-btn { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); cursor: pointer; padding: 7px 14px; border-radius: 6px; font-family: 'Inter', sans-serif; transition: background 0.15s; }
 .logout-btn:hover { background: rgba(255,255,255,0.18); }
+
 .layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
 .sidebar { background: var(--surface); border-right: 1px solid var(--line); padding: 24px 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; }
 .sidebar-section { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; padding: 12px 24px 8px; font-weight: 500; }
@@ -74,11 +79,13 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .nav-item.active { background: var(--blue-soft); color: var(--navy); border-left-color: var(--navy); font-weight: 600; }
 .nav-item .badge { background: var(--line); color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
 .nav-item.active .badge { background: var(--navy); color: white; }
+
 .main { padding: 32px 40px; max-width: 100%; overflow-x: hidden; }
 .page-header { margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
 .page-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
 .page-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
 .page-meta strong { color: var(--ink); font-weight: 600; }
+
 .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
 .stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
 .stat-card.primary { background: var(--navy); color: white; border-color: var(--navy); }
@@ -89,16 +96,20 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .stat-card.primary .stat-unit { color: rgba(255,255,255,0.5); }
 .stat-sub { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
 .stat-card.primary .stat-sub { color: rgba(255,255,255,0.55); }
+
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
 .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
 .card-title { font-size: 16px; font-weight: 600; color: var(--ink); }
 .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+.card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 18px; }
+
 .mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
 .mode-btn { padding: 14px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Inter', sans-serif; }
 .mode-btn:hover { border-color: var(--navy); background: var(--surface-2); }
 .mode-btn.active { border-color: var(--navy); background: var(--blue-soft); box-shadow: 0 0 0 3px rgba(26,44,79,0.06); }
 .mode-btn .mode-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
 .mode-btn .mode-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
 .form-row.full { grid-template-columns: 1fr; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
@@ -107,11 +118,25 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .form-input { font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); color: var(--ink); outline: none; transition: all 0.2s; width: 100%; }
 .form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
 textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; }
+select.form-input { cursor: pointer; }
+
 .ot-preview { background: var(--blue-soft); border: 1px solid #c5d8f8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; display: none; }
 .ot-preview-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--ink-soft); }
 .ot-preview-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
 .ot-preview-row.total { border-top: 1px solid rgba(26,44,79,0.15); margin-top: 6px; padding-top: 10px; }
 .ot-preview-row.total span { font-weight: 700; color: var(--navy); font-size: 15px; }
+
+.alloc-box { background: var(--blue-soft); border: 1px solid #c5d8f8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+.alloc-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); font-weight: 600; margin-bottom: 10px; }
+.alloc-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
+.alloc-row span:first-child { color: var(--ink-soft); }
+.alloc-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--navy); }
+.alloc-row.shortfall span:last-child { color: var(--red); }
+.alloc-row.total { border-top: 1px solid rgba(26,44,79,0.2); margin-top: 8px; padding-top: 10px; font-weight: 700; }
+.validation { padding: 10px 14px; border-radius: 6px; font-size: 12px; margin: 12px 0; }
+.validation.warn { background: var(--red-soft); color: var(--red); border: 1px solid #f0c8c8; }
+.validation.ok { background: var(--green-soft); color: var(--green); border: 1px solid #b8d8c0; }
+
 .pill { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
 .pill-pending { background: var(--amber-soft); color: var(--amber); }
 .pill-approved { background: var(--green-soft); color: var(--green); }
@@ -119,6 +144,8 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
 .pill-wfo-normal { background: var(--blue-soft); color: var(--navy); }
 .pill-wfo-holiday { background: #fde8d8; color: #a04020; }
 .pill-wfh { background: var(--green-soft); color: var(--green); }
+.pill-claimed { background: #ede4f5; color: #6a3a9a; }
+
 .entry-row { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 18px; align-items: center; transition: all 0.15s; }
 .entry-row:hover { border-color: var(--navy-light); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .entry-date-block { min-width: 90px; }
@@ -130,24 +157,39 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
 .entry-mail-tag { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
 .entry-hours { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--navy); text-align: right; }
 .entry-hours-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.entry-actions { display: flex; gap: 6px; }
+.entry-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+.compoff-row { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 16px; align-items: center; }
+.compoff-date { font-size: 14px; font-weight: 600; color: var(--ink); min-width: 100px; }
+.compoff-drawn { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.compoff-hrs { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--navy); }
+
 .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
 .empty-icon { width: 48px; height: 48px; margin: 0 auto 16px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--muted); }
 .empty-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.6; }
 .empty-text { font-size: 14px; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
 .empty-hint { font-size: 12px; }
+
 .loading { display: flex; align-items: center; justify-content: center; padding: 50px; color: var(--muted); font-size: 13px; gap: 12px; }
 .spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: white; padding: 13px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: white; padding: 13px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2); max-width: 90%; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.copy-output { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); white-space: pre-wrap; line-height: 1.6; margin: 14px 0; max-height: 200px; overflow-y: auto; }
+
 .mobile-tabs { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 100; }
 .mobile-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--muted); gap: 4px; font-size: 10px; font-weight: 500; }
 .mobile-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mobile-tab.active { color: var(--navy); }
 .mobile-tab.active svg { stroke-width: 2.2; }
+
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
@@ -168,6 +210,8 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
   .entry-hours-block { grid-column: 2 / 3; grid-row: 1; text-align: right; }
   .entry-body { grid-column: 1 / -1; }
   .entry-actions { grid-column: 1 / -1; justify-content: flex-end; }
+  .compoff-row { grid-template-columns: 1fr auto; gap: 10px; }
+  .compoff-drawn { grid-column: 1 / -1; }
   .card { padding: 18px; }
 }
 </style>
@@ -180,15 +224,9 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
     <div class="login-title">Sign in</div>
     <div class="login-sub">Harshil Shah · Communications & Event Production</div>
     <div class="login-error" id="login-error"></div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email">
-    </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
-    </div>
-    <button class="btn btn-primary" id="login-btn">Sign In</button>
+    <div class="field"><label>Email</label><input type="email" id="login-email" autocomplete="email"></div>
+    <div class="field"><label>Password</label><input type="password" id="login-password" autocomplete="current-password"></div>
+    <button class="btn btn-primary full" id="login-btn">Sign In</button>
   </div>
 </div>
 
@@ -213,24 +251,21 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
       <div class="sidebar-section" id="actions-section">Actions</div>
       <button class="nav-item" data-tab="log" id="nav-log-btn"><span>Log Overtime</span></button>
       <button class="nav-item" data-tab="compoff" id="nav-compoff-btn"><span>Apply Comp-Off</span></button>
+      <button class="nav-item" data-tab="compoff-history"><span>Comp-Off History</span><span class="badge" id="nav-compoff-count">0</span></button>
       <div class="sidebar-section">Account</div>
       <button class="nav-item" data-tab="account"><span>Settings</span></button>
     </aside>
 
     <main class="main">
+
       <div class="tab-content active" id="tab-dashboard">
         <div class="page-header">
           <div class="page-title">Dashboard</div>
           <div class="page-meta" id="page-meta-dashboard">—</div>
         </div>
-        <div class="stat-strip" id="stat-strip">
-          <div class="loading"><div class="spinner"></div> Loading…</div>
-        </div>
+        <div class="stat-strip" id="stat-strip"><div class="loading"><div class="spinner"></div> Loading…</div></div>
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Recent Entries</div>
-            <div class="card-meta">Last 5</div>
-          </div>
+          <div class="card-header"><div class="card-title">Recent Entries</div><div class="card-meta">Last 5</div></div>
           <div id="recent-list"><div class="loading"><div class="spinner"></div></div></div>
         </div>
       </div>
@@ -240,16 +275,11 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
           <div class="page-title">All Entries</div>
           <div class="page-meta" id="page-meta-entries">—</div>
         </div>
-        <div class="card">
-          <div id="all-list"><div class="loading"><div class="spinner"></div></div></div>
-        </div>
+        <div class="card"><div id="all-list"><div class="loading"><div class="spinner"></div></div></div></div>
       </div>
 
       <div class="tab-content" id="tab-log">
-        <div class="page-header">
-          <div class="page-title">Log Overtime</div>
-          <div class="page-meta">Record a new overtime entry</div>
-        </div>
+        <div class="page-header"><div class="page-title">Log Overtime</div></div>
         <div class="card">
           <div class="form-label" style="margin-bottom:10px;">Work Mode</div>
           <div class="mode-grid">
@@ -280,34 +310,76 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
             <div class="ot-preview-row" id="prev-deduct-row"><span>Shift deduction</span><span>− 8h 30m</span></div>
             <div class="ot-preview-row total"><span>OT credited</span><span id="prev-ot">—</span></div>
           </div>
-          <button class="btn btn-primary" id="save-entry-btn" style="width:auto;padding:13px 32px;">Save Entry</button>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="save-entry-btn">Save Entry</button>
+          </div>
         </div>
       </div>
 
       <div class="tab-content" id="tab-compoff">
-        <div class="page-header">
-          <div class="page-title">Apply Comp-Off</div>
-          <div class="page-meta">Coming next session</div>
-        </div>
+        <div class="page-header"><div class="page-title">Apply for Comp-Off</div></div>
         <div class="card">
-          <div class="empty">
-            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div>
-            <div class="empty-text">Comp-off calculator coming soon</div>
-            <div class="empty-hint">This feature will be added in the next session.</div>
+          <div class="card-desc">
+            Choose the comp-off type and the date you'll be taking. The system will calculate which OT entries to draw from
+            (oldest first), and give you the formatted text to paste into the BDB HR portal.
+            <br><br>
+            <strong>Rules:</strong> 4 hours (half day) or 8 hours (full day) · Maximum 32 hours (4 days) per calendar month.
           </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Comp-Off Type</label>
+              <select class="form-input" id="comp-type">
+                <option value="4">Half Day · 4 hours</option>
+                <option value="8" selected>Full Day · 8 hours</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Date Taking Off</label>
+              <input type="date" class="form-input" id="comp-date">
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-field">
+              <label class="form-label">Reason <span class="hint">(optional)</span></label>
+              <input type="text" class="form-input" id="comp-reason" placeholder="e.g. Personal Work">
+            </div>
+          </div>
+
+          <div class="alloc-box" id="alloc-box" style="display:none;">
+            <div class="alloc-title">Allocation Preview · Drawing from oldest OT entries</div>
+            <div id="alloc-rows"></div>
+          </div>
+
+          <div id="comp-validation"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="record-copy-btn">📋 Record & Copy for Portal</button>
+          </div>
+
+          <div class="copy-output" id="copy-output" style="display:none;"></div>
         </div>
+      </div>
+
+      <div class="tab-content" id="tab-compoff-history">
+        <div class="page-header">
+          <div class="page-title">Comp-Off History</div>
+          <div class="page-meta" id="page-meta-compoff">—</div>
+        </div>
+        <div class="card"><div id="compoff-list"><div class="loading"><div class="spinner"></div></div></div></div>
       </div>
 
       <div class="tab-content" id="tab-account">
         <div class="page-header"><div class="page-title">Settings</div></div>
         <div class="card">
           <div class="card-header"><div class="card-title">Account</div></div>
-          <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
-            <div style="margin-bottom:8px;"><strong>Logged in as:</strong> <span id="account-email">—</span></div>
+          <div style="font-size:13px;color:var(--ink-soft);line-height:1.8;">
+            <div><strong>Logged in as:</strong> <span id="account-email">—</span></div>
             <div><strong>Role:</strong> <span id="account-role">—</span></div>
           </div>
         </div>
       </div>
+
     </main>
   </div>
 
@@ -324,9 +396,13 @@ textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; 
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
       Log
     </button>
+    <button class="mobile-tab" data-tab="compoff" id="mobile-compoff-btn">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Comp
+    </button>
     <button class="mobile-tab" data-tab="account">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
-      Account
+      More
     </button>
   </nav>
 </div>
@@ -338,12 +414,14 @@ const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.pub
 let currentUser = null;
 let isOwner = false;
 let selectedMode = null;
+let allEntries = [];
+let allCompoffs = [];
 
-function toast(msg) {
+function toast(msg, dur) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(() => t.classList.remove('show'), dur || 2500);
 }
 
 function fmtDate(iso) {
@@ -352,8 +430,17 @@ function fmtDate(iso) {
   return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
 }
 
+function fmtDateShort(iso) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
+}
+
 function fmtTime(t) { return t ? t.slice(0,5) : ''; }
+function ymKey(iso) { return iso ? iso.slice(0,7) : ''; }
 function modeLabel(m) { return { 'wfo-normal': 'Office', 'wfo-holiday': 'Holiday', 'wfh': 'WFH' }[m] || m; }
+function modeLabelLong(m) { return { 'wfo-normal': 'Office (Normal)', 'wfo-holiday': 'Office (Holiday)', 'wfh': 'WFH' }[m] || m; }
+function modeShort(m) { return { 'wfo-normal': 'wfo', 'wfo-holiday': 'wfo', 'wfh': 'wfh' }[m] || m; }
 function modePillClass(m) { return { 'wfo-normal': 'pill-wfo-normal', 'wfo-holiday': 'pill-wfo-holiday', 'wfh': 'pill-wfh' }[m] || ''; }
 
 function computeOT(from, to, mode) {
@@ -392,14 +479,14 @@ async function initApp(user) {
       document.getElementById('nav-log-btn').style.display = 'none';
       document.getElementById('nav-compoff-btn').style.display = 'none';
       document.getElementById('mobile-log-btn').style.display = 'none';
+      document.getElementById('mobile-compoff-btn').style.display = 'none';
       document.getElementById('actions-section').style.display = 'none';
     }
 
     document.getElementById('login-btn').disabled = false;
     document.getElementById('login-btn').textContent = 'Sign In';
 
-    await loadDashboard();
-    await loadAllEntries();
+    await loadAllData();
   } catch (err) {
     console.error('initApp ERROR:', err);
     alert('Init error: ' + (err.message || err));
@@ -425,7 +512,6 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   errEl.style.display = 'none';
 
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
-
   if (error) {
     errEl.textContent = 'Incorrect email or password.';
     errEl.style.display = 'block';
@@ -459,61 +545,83 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-item, .mobile-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('[data-tab="' + tab + '"]').forEach(b => b.classList.add('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
+  const target = document.getElementById('tab-' + tab);
+  if (target) target.classList.add('active');
 }
 document.querySelectorAll('.nav-item, .mobile-tab').forEach(btn => {
   btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
 
-async function loadDashboard() {
+// ─── DATA LOADING ───
+async function loadAllData() {
+  // Load entries with their allocations
+  const { data: entries } = await sb.from('entries').select('*').order('entry_date', { ascending: true, nullsFirst: false });
+  const { data: compoffs } = await sb.from('compoffs').select('*').order('taken_date', { ascending: false });
+  const { data: allocations } = await sb.from('compoff_allocations').select('*');
+
+  allEntries = entries || [];
+  allCompoffs = compoffs || [];
+
+  // Attach allocations to entries
+  allEntries.forEach(e => {
+    e.allocations = (allocations || []).filter(a => a.entry_id === e.id);
+    e.hours_used = e.allocations.reduce((s, a) => s + a.hours_drawn, 0);
+    e.hours_available = e.ot_hours - e.hours_used;
+  });
+
+  // Attach allocations and entry refs to compoffs
+  allCompoffs.forEach(c => {
+    c.allocations = (allocations || []).filter(a => a.compoff_id === c.id).map(a => {
+      const ent = allEntries.find(e => e.id === a.entry_id);
+      return Object.assign({}, a, { entry: ent });
+    });
+  });
+
+  renderDashboard();
+  renderEntries();
+  renderCompoffHistory();
+}
+
+function renderDashboard() {
   const grid = document.getElementById('stat-strip');
-  const { data, error } = await sb.from('balance_summary').select('*').single();
-
-  if (error) {
-    grid.innerHTML = '<div class="loading">Could not load balance.</div>';
-    return;
-  }
-
-  const approved = data?.total_ot_earned || 0;
-  const used = data?.total_compoff_used || 0;
-  const balance = data?.available_balance || 0;
-  const pending = data?.total_compoff_pending || 0;
+  const totalOT = allEntries.reduce((s, e) => s + e.ot_hours, 0);
+  const compUsed = allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').reduce((s, c) => s + c.hours, 0);
+  const compPending = allCompoffs.filter(c => c.status === 'pending').reduce((s, c) => s + c.hours, 0);
+  const balance = totalOT - compUsed - compPending;
 
   grid.innerHTML =
     '<div class="stat-card primary">' +
       '<div class="stat-label">Available Balance</div>' +
       '<div><span class="stat-num">' + balance + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">' + approved + ' earned − ' + used + ' used</div>' +
+      '<div class="stat-sub">' + totalOT + ' earned − ' + (compUsed + compPending) + ' allocated</div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-label">OT Earned</div>' +
-      '<div><span class="stat-num">' + approved + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">All time</div>' +
+      '<div><span class="stat-num">' + totalOT + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">' + allEntries.length + ' entries</div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-label">Comp Used</div>' +
-      '<div><span class="stat-num">' + used + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">All time</div>' +
+      '<div><span class="stat-num">' + compUsed + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">' + allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').length + ' approved</div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-label">Pending Comp</div>' +
-      '<div><span class="stat-num">' + pending + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">Awaiting decision</div>' +
+      '<div><span class="stat-num">' + compPending + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">Awaiting approval</div>' +
     '</div>';
 
-  document.getElementById('page-meta-dashboard').innerHTML = '<strong>' + approved + '</strong> hrs earned · <strong>' + balance + '</strong> hrs available';
+  document.getElementById('page-meta-dashboard').innerHTML = '<strong>' + totalOT + '</strong> hrs earned · <strong>' + balance + '</strong> hrs available';
 
-  const { data: recent } = await sb.from('entries').select('*').order('created_at', { ascending: false }).limit(5);
-  renderEntryList(recent || [], 'recent-list');
+  const recent = [].concat(allEntries).reverse().slice(0, 5);
+  renderEntryList(recent, 'recent-list');
 }
 
-async function loadAllEntries() {
-  const { data } = await sb.from('entries').select('*').order('entry_date', { ascending: false, nullsFirst: false });
-  const count = data?.length || 0;
-  const totalOT = (data || []).reduce((s, e) => s + (e.ot_hours || 0), 0);
-  document.getElementById('page-meta-entries').innerHTML = '<strong>' + count + '</strong> entries · <strong>' + totalOT + '</strong> OT hours';
-  document.getElementById('nav-entries-count').textContent = count;
-  renderEntryList(data || [], 'all-list');
+function renderEntries() {
+  const reversed = [].concat(allEntries).reverse();
+  document.getElementById('page-meta-entries').innerHTML = '<strong>' + allEntries.length + '</strong> entries · <strong>' + allEntries.reduce((s, e) => s + e.ot_hours, 0) + '</strong> OT hours';
+  document.getElementById('nav-entries-count').textContent = allEntries.length;
+  renderEntryList(reversed, 'all-list');
 }
 
 function renderEntryList(entries, containerId) {
@@ -521,7 +629,7 @@ function renderEntryList(entries, containerId) {
   if (entries.length === 0) {
     el.innerHTML =
       '<div class="empty">' +
-        '<div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>' +
+        '<div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>' +
         '<div class="empty-text">No entries yet</div>' +
         '<div class="empty-hint">' + (isOwner ? 'Click "Log Overtime" to add your first entry.' : 'No entries to view.') + '</div>' +
       '</div>';
@@ -532,28 +640,85 @@ function renderEntryList(entries, containerId) {
       : e.status === 'rejected' ? '<span class="pill pill-rejected">Rejected</span>'
       : '<span class="pill pill-pending">Pending</span>';
     const modePill = '<span class="pill ' + modePillClass(e.mode) + '">' + modeLabel(e.mode) + '</span>';
+    const claimedPill = e.hours_used > 0
+      ? '<span class="pill pill-claimed">' + (e.hours_used >= e.ot_hours ? 'Fully Claimed' : e.hours_used + '/' + e.ot_hours + ' Claimed') + '</span>'
+      : '';
     const timeStr = e.time_from && e.time_to ? fmtTime(e.time_from) + ' – ' + fmtTime(e.time_to) : '';
-    const mailDate = e.mail_date ? '<span class="entry-mail-tag">Mailed ' + fmtDate(e.mail_date) + '</span>' : '';
-    const deleteBtn = isOwner ? '<button class="btn btn-danger btn-sm" onclick="deleteEntry(\'' + e.id + '\')">Delete</button>' : '';
-    const approveBtn = isOwner && e.status === 'logged' ? '<button class="btn btn-secondary btn-sm" onclick="markApproved(\'' + e.id + '\')">Approve</button>' : '';
+    const mailDate = e.mail_date ? '<span class="entry-mail-tag">📧 ' + fmtDate(e.mail_date) + '</span>' : '';
+    let actions = '';
+    if (isOwner) {
+      if (e.status === 'logged' || e.status === 'pending') {
+        actions += '<button class="btn btn-success btn-sm" onclick="markApproved(\'' + e.id + '\')">Approve</button>';
+      }
+      if (e.hours_used === 0) {
+        actions += '<button class="btn btn-danger btn-sm" onclick="deleteEntry(\'' + e.id + '\')">Delete</button>';
+      }
+    }
     return '<div class="entry-row">' +
       '<div class="entry-date-block">' +
         '<div class="entry-date">' + (e.date_label || fmtDate(e.entry_date)) + '</div>' +
         (timeStr ? '<div class="entry-time">' + timeStr + '</div>' : '') +
       '</div>' +
       '<div class="entry-body">' +
-        '<div class="entry-work">' + e.work_done + '</div>' +
-        '<div class="entry-tags">' + statusPill + modePill + mailDate + '</div>' +
+        '<div class="entry-work">' + (e.work_done || '') + '</div>' +
+        '<div class="entry-tags">' + statusPill + modePill + claimedPill + mailDate + '</div>' +
       '</div>' +
       '<div class="entry-hours-block">' +
         '<div class="entry-hours">' + e.ot_hours + '</div>' +
         '<div class="entry-hours-label">OT hrs</div>' +
       '</div>' +
-      ((approveBtn || deleteBtn) ? '<div class="entry-actions">' + approveBtn + deleteBtn + '</div>' : '') +
+      (actions ? '<div class="entry-actions">' + actions + '</div>' : '') +
     '</div>';
   }).join('');
 }
 
+function renderCompoffHistory() {
+  const el = document.getElementById('compoff-list');
+  document.getElementById('nav-compoff-count').textContent = allCompoffs.length;
+  const totalUsed = allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').reduce((s, c) => s + c.hours, 0);
+  document.getElementById('page-meta-compoff').innerHTML = '<strong>' + allCompoffs.length + '</strong> applications · <strong>' + totalUsed + '</strong> approved hours';
+
+  if (allCompoffs.length === 0) {
+    el.innerHTML =
+      '<div class="empty">' +
+        '<div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div>' +
+        '<div class="empty-text">No comp-offs applied yet</div>' +
+      '</div>';
+    return;
+  }
+
+  el.innerHTML = allCompoffs.map(c => {
+    const statusPill = c.status === 'approved' ? '<span class="pill pill-approved">Approved</span>'
+      : c.status === 'verbally_approved' ? '<span class="pill pill-approved">Verbal</span>'
+      : c.status === 'rejected' ? '<span class="pill pill-rejected">Rejected</span>'
+      : c.status === 'cancelled' ? '<span class="pill pill-rejected">Cancelled</span>'
+      : '<span class="pill pill-pending">Pending</span>';
+    const drawnLines = c.allocations.map(a => {
+      const ent = a.entry;
+      const lbl = ent ? (ent.date_label || fmtDate(ent.entry_date)) : '(removed)';
+      return lbl + ' (' + a.hours_drawn + 'h)';
+    }).join(' · ');
+    let actions = '';
+    if (isOwner) {
+      if (c.status === 'pending') {
+        actions += '<button class="btn btn-success btn-sm" onclick="approveCompoff(\'' + c.id + '\')">Mark Approved</button>';
+        actions += '<button class="btn btn-danger btn-sm" onclick="rejectCompoff(\'' + c.id + '\')">Reject</button>';
+      }
+      actions += '<button class="btn btn-secondary btn-sm" onclick="copyCompoff(\'' + c.id + '\')">📋 Copy</button>';
+    }
+    return '<div class="compoff-row">' +
+      '<div class="compoff-date">' + fmtDate(c.taken_date) + '</div>' +
+      '<div>' +
+        '<div style="display:flex;gap:6px;margin-bottom:5px;">' + statusPill + (c.hours === 4 ? '<span class="pill pill-claimed">Half Day</span>' : '<span class="pill pill-claimed">Full Day</span>') + '</div>' +
+        '<div class="compoff-drawn">From: ' + drawnLines + '</div>' +
+      '</div>' +
+      '<div class="compoff-hrs">' + c.hours + 'h</div>' +
+      (actions ? '<div class="entry-actions">' + actions + '</div>' : '') +
+    '</div>';
+  }).join('');
+}
+
+// ─── LOG ENTRY ───
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -658,20 +823,205 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   selectedMode = null;
   document.getElementById('ot-preview').style.display = 'none';
+  document.getElementById('manual-row').style.display = 'none';
+  document.getElementById('time-row').style.display = 'grid';
 
   toast('Entry saved ✓');
-  await loadDashboard();
-  await loadAllEntries();
+  await loadAllData();
   switchTab('entries');
 });
 
+// ─── COMP-OFF FEATURE ───
+function planAllocation(hoursWanted) {
+  // FIFO: oldest entry with available hours first, only from approved entries
+  const candidates = allEntries
+    .filter(e => e.status === 'approved')
+    .filter(e => e.hours_available > 0)
+    .slice()
+    .sort((a, b) => {
+      const ad = a.entry_date || '9999';
+      const bd = b.entry_date || '9999';
+      return ad.localeCompare(bd);
+    });
+
+  let need = hoursWanted;
+  const allocations = [];
+  for (const e of candidates) {
+    if (need <= 0) break;
+    const take = Math.min(need, e.hours_available);
+    allocations.push({ entry: e, hours: take });
+    need -= take;
+  }
+  return { allocations: allocations, shortfall: need };
+}
+
+function compHoursThisMonth(targetYM) {
+  return allCompoffs
+    .filter(c => ymKey(c.taken_date) === targetYM)
+    .filter(c => c.status === 'approved' || c.status === 'verbally_approved' || c.status === 'pending')
+    .reduce((s, c) => s + c.hours, 0);
+}
+
+function ymLabel(ym) {
+  if (!ym) return '';
+  const parts = ym.split('-');
+  return new Date(+parts[0], +parts[1]-1, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+}
+
+function updateCompPreview() {
+  const hours = parseInt(document.getElementById('comp-type').value);
+  const date = document.getElementById('comp-date').value;
+  const allocBox = document.getElementById('alloc-box');
+  const valEl = document.getElementById('comp-validation');
+
+  const plan = planAllocation(hours);
+
+  if (plan.allocations.length === 0 && plan.shortfall === hours) {
+    allocBox.style.display = 'none';
+  } else {
+    allocBox.style.display = 'block';
+    let html = plan.allocations.map(a => {
+      const lbl = a.entry.date_label || fmtDate(a.entry.entry_date);
+      return '<div class="alloc-row"><span>' + lbl + '</span><span>' + a.hours + ' hrs</span></div>';
+    }).join('');
+    if (plan.shortfall > 0) {
+      html += '<div class="alloc-row shortfall"><span>Shortfall</span><span>' + plan.shortfall + ' hrs</span></div>';
+    }
+    const totalAllocated = hours - plan.shortfall;
+    html += '<div class="alloc-row total"><span>Total drawn</span><span>' + totalAllocated + ' / ' + hours + ' hrs</span></div>';
+    document.getElementById('alloc-rows').innerHTML = html;
+  }
+
+  valEl.innerHTML = '';
+  const totalOT = allEntries.filter(e => e.status === 'approved').reduce((s, e) => s + e.hours_available, 0);
+
+  if (plan.shortfall > 0) {
+    valEl.innerHTML += '<div class="validation warn">⚠ Insufficient approved OT balance. You only have ' + totalOT + ' hrs available, need ' + hours + '.</div>';
+  }
+  if (date) {
+    const ym = ymKey(date);
+    const usedThisMonth = compHoursThisMonth(ym);
+    const wouldBe = usedThisMonth + hours;
+    if (wouldBe > 32) {
+      valEl.innerHTML += '<div class="validation warn">⚠ Exceeds 32-hour monthly cap. ' + usedThisMonth + ' already used in ' + ymLabel(ym) + '.</div>';
+    } else {
+      valEl.innerHTML += '<div class="validation ok">✓ ' + wouldBe + '/32 hours used in ' + ymLabel(ym) + ' after this application.</div>';
+    }
+  }
+}
+
+document.getElementById('comp-type').addEventListener('change', updateCompPreview);
+document.getElementById('comp-date').addEventListener('change', updateCompPreview);
+
+function buildPortalText(hours, allocations, reason) {
+  // Format: "Applying 8hr CO- against OT - *28 Jan 26 | 8:00AM – 9:39PM (wfo) → 5hr (Using 4 | Used 1 on 15-04-26)"
+  let txt = 'Applying ' + hours + 'hr CO- against OT -\n';
+  txt += allocations.map(a => {
+    const e = a.entry;
+    const dateStr = e.date_label || fmtDateShort(e.entry_date);
+    const timeStr = e.time_from && e.time_to ? ' | ' + fmtTime(e.time_from) + '–' + fmtTime(e.time_to) : '';
+    const mode = '(' + modeShort(e.mode) + ')';
+    const totalOT = e.ot_hours;
+    const usedBefore = e.hours_used;
+    let usingPart = 'Using ' + a.hours;
+    if (usedBefore > 0) {
+      // Find which prior comp-offs used this entry
+      const priorAllocs = e.allocations.filter(x => x.compoff_id !== 'NEW');
+      const prior = priorAllocs.map(x => {
+        const c = allCompoffs.find(co => co.id === x.compoff_id);
+        return x.hours_drawn + ' on ' + (c ? fmtDateShort(c.taken_date).replace(/\s/g, '-') : '?');
+      }).join(', ');
+      usingPart += ' | Used ' + prior;
+    }
+    return '*' + dateStr + timeStr + ' ' + mode + ' → ' + totalOT + 'hr (' + usingPart + ')';
+  }).join('\n');
+  if (reason) txt = 'Reason: ' + reason + '\n\n' + txt;
+  return txt;
+}
+
+document.getElementById('record-copy-btn').addEventListener('click', async () => {
+  if (!isOwner) return;
+  const hours = parseInt(document.getElementById('comp-type').value);
+  const date = document.getElementById('comp-date').value;
+  const reason = document.getElementById('comp-reason').value.trim();
+
+  if (!date) { toast('Please pick the date you\'re taking off'); return; }
+
+  const ym = ymKey(date);
+  const usedThisMonth = compHoursThisMonth(ym);
+  if (usedThisMonth + hours > 32) {
+    toast('Exceeds monthly cap (' + usedThisMonth + '/32 in ' + ymLabel(ym) + ')');
+    return;
+  }
+
+  const plan = planAllocation(hours);
+  if (plan.shortfall > 0) {
+    toast('Insufficient OT balance — only ' + (hours - plan.shortfall) + ' hrs available');
+    return;
+  }
+
+  // Build the text first so we can copy it
+  const portalText = buildPortalText(hours, plan.allocations, reason);
+
+  // Save to database
+  const btn = document.getElementById('record-copy-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  const { data: newCompoff, error } = await sb.from('compoffs').insert({
+    taken_date: date,
+    hours: hours,
+    status: 'pending',
+    applicant_note: reason || null
+  }).select().single();
+
+  if (error) {
+    btn.disabled = false;
+    btn.textContent = '📋 Record & Copy for Portal';
+    toast('Error saving: ' + error.message);
+    return;
+  }
+
+  // Save allocations
+  const allocRows = plan.allocations.map(a => ({
+    compoff_id: newCompoff.id,
+    entry_id: a.entry.id,
+    hours_drawn: a.hours
+  }));
+  const { error: allocError } = await sb.from('compoff_allocations').insert(allocRows);
+
+  if (allocError) {
+    toast('Allocation error: ' + allocError.message);
+  }
+
+  // Try to copy to clipboard
+  try {
+    await navigator.clipboard.writeText(portalText);
+    toast('Saved & copied to clipboard ✓ Paste in BDB portal', 4000);
+  } catch (e) {
+    toast('Saved ✓ See text below to copy manually', 4000);
+  }
+
+  // Show the text either way
+  document.getElementById('copy-output').style.display = 'block';
+  document.getElementById('copy-output').textContent = portalText;
+
+  btn.disabled = false;
+  btn.textContent = '📋 Record & Copy for Portal';
+
+  // Reset form
+  document.getElementById('comp-reason').value = '';
+
+  await loadAllData();
+});
+
+// ─── ACTIONS ───
 window.markApproved = async function(id) {
   if (!isOwner) return;
   const { error } = await sb.from('entries').update({ status: 'approved' }).eq('id', id);
   if (error) { toast('Error: ' + error.message); return; }
-  toast('Approved ✓');
-  await loadDashboard();
-  await loadAllEntries();
+  toast('Marked approved ✓');
+  await loadAllData();
 };
 
 window.deleteEntry = async function(id) {
@@ -680,11 +1030,60 @@ window.deleteEntry = async function(id) {
   const { error } = await sb.from('entries').delete().eq('id', id);
   if (error) { toast('Error: ' + error.message); return; }
   toast('Deleted');
-  await loadDashboard();
-  await loadAllEntries();
+  await loadAllData();
 };
 
+window.approveCompoff = async function(id) {
+  if (!isOwner) return;
+  const { error } = await sb.from('compoffs').update({ status: 'approved', manager_responded_at: new Date().toISOString() }).eq('id', id);
+  if (error) { toast('Error: ' + error.message); return; }
+  toast('Comp-off approved ✓');
+  await loadAllData();
+};
+
+window.rejectCompoff = async function(id) {
+  if (!isOwner) return;
+  if (!confirm('Reject this comp-off? Hours will be returned to your balance.')) return;
+  // Delete allocations first to free up the hours
+  await sb.from('compoff_allocations').delete().eq('compoff_id', id);
+  const { error } = await sb.from('compoffs').update({ status: 'rejected', manager_responded_at: new Date().toISOString() }).eq('id', id);
+  if (error) { toast('Error: ' + error.message); return; }
+  toast('Comp-off rejected · hours restored');
+  await loadAllData();
+};
+
+window.copyCompoff = async function(id) {
+  const c = allCompoffs.find(x => x.id === id);
+  if (!c) return;
+  const txt = buildPortalText(c.hours, c.allocations.map(a => ({ entry: a.entry, hours: a.hours_drawn })), c.applicant_note);
+  try {
+    await navigator.clipboard.writeText(txt);
+    toast('Copied to clipboard ✓');
+  } catch (e) {
+    alert(txt);
+  }
+};
+
+// ─── SEARCH ───
+document.getElementById('search-input').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    renderEntryList([].concat(allEntries).reverse(), 'all-list');
+    return;
+  }
+  const filtered = allEntries.filter(ent =>
+    (ent.work_done || '').toLowerCase().includes(q) ||
+    (ent.date_label || '').toLowerCase().includes(q) ||
+    (ent.entry_date || '').includes(q) ||
+    modeLabel(ent.mode).toLowerCase().includes(q)
+  ).reverse();
+  renderEntryList(filtered, 'all-list');
+  switchTab('entries');
+});
+
+// Set defaults
 document.getElementById('f-date').valueAsDate = new Date();
+document.getElementById('comp-date').valueAsDate = new Date();
 </script>
 </body>
 </html>
