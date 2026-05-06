@@ -8,28 +8,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 <script src="config.js"></script>
 <style>
 :root {
-  --navy: #1a2c4f;
-  --navy-dark: #122039;
-  --navy-light: #2a4070;
-  --bg: #f5f5f7;
-  --surface: #ffffff;
-  --surface-2: #fafafa;
-  --line: #e8e8ec;
-  --line-strong: #d4d4d8;
-  --ink: #1a1a1a;
-  --ink-soft: #4a4a4f;
-  --muted: #8a8a90;
-  --blue: #2d5db8;
-  --blue-soft: #e8f0fd;
-  --green: #2d7a3f;
-  --green-soft: #e6f4e9;
-  --amber: #c08920;
-  --amber-soft: #fdf2dc;
-  --red: #c93030;
-  --red-soft: #fce8e8;
+  --navy: #1a2c4f; --navy-dark: #122039; --navy-light: #2a4070;
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #fafafa;
+  --line: #e8e8ec; --line-strong: #d4d4d8;
+  --ink: #1a1a1a; --ink-soft: #4a4a4f; --muted: #8a8a90;
+  --blue: #2d5db8; --blue-soft: #e8f0fd;
+  --green: #2d7a3f; --green-soft: #e6f4e9;
+  --amber: #c08920; --amber-soft: #fdf2dc;
+  --red: #c93030; --red-soft: #fce8e8;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
@@ -41,32 +31,31 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
 .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
 .field label { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; }
-.field input { font-family: 'Inter', sans-serif; font-size: 15px; padding: 13px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--bg); color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-.field input:focus { border-color: var(--navy); background: white; box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
+.field input, .field select { font-family: 'Inter', sans-serif; font-size: 15px; padding: 13px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--bg); color: var(--ink); transition: all 0.2s; outline: none; }
+.field input:focus, .field select:focus { border-color: var(--navy); background: white; box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
+
 .btn { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 13px 20px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-primary { background: var(--navy); color: white; }
-.btn-primary:hover { background: var(--navy-dark); }
+.btn-primary:hover:not(:disabled) { background: var(--navy-dark); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-primary.full { width: 100%; }
 .btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-strong); }
 .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
 .btn-danger { background: white; color: var(--red); border: 1px solid #f0c8c8; }
 .btn-danger:hover { background: var(--red-soft); }
-.btn-success { background: var(--green); color: white; }
-.btn-success:hover { background: #1f5a30; }
 .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 6px; }
+.btn-block { width: 100%; }
 .login-error { background: var(--red-soft); color: var(--red); border: 1px solid #f0c8c8; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
 
 .app { display: none; min-height: 100vh; }
 .header-bar { background: var(--navy); color: white; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,44,79,0.15); }
-.header-brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; }
+.header-brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .header-brand .pipe { color: rgba(255,255,255,0.4); font-weight: 300; margin: 0 6px; }
 .header-brand .lite { font-weight: 400; opacity: 0.85; }
 .header-search { flex: 1; max-width: 400px; margin: 0 32px; display: flex; align-items: center; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0 14px; height: 38px; }
 .header-search svg { width: 14px; height: 14px; stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 2; }
 .header-search input { background: none; border: none; outline: none; color: white; font-family: 'Inter', sans-serif; font-size: 13px; padding: 0 10px; width: 100%; }
 .header-search input::placeholder { color: rgba(255,255,255,0.5); }
-.header-right { display: flex; align-items: center; gap: 14px; }
+.header-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .viewer-badge { background: rgba(255,255,255,0.15); color: white; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 11px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
 .logout-btn { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); cursor: pointer; padding: 7px 14px; border-radius: 6px; font-family: 'Inter', sans-serif; transition: background 0.15s; }
 .logout-btn:hover { background: rgba(255,255,255,0.18); }
@@ -74,17 +63,15 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
 .sidebar { background: var(--surface); border-right: 1px solid var(--line); padding: 24px 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; }
 .sidebar-section { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; padding: 12px 24px 8px; font-weight: 500; }
-.nav-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 24px; color: var(--ink-soft); font-size: 14px; cursor: pointer; transition: background 0.15s, color 0.15s; border-left: 3px solid transparent; font-weight: 500; background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
+.nav-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 24px; color: var(--ink-soft); font-size: 14px; cursor: pointer; transition: all 0.15s; border-left: 3px solid transparent; font-weight: 500; background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
 .nav-item:hover { background: var(--surface-2); color: var(--ink); }
 .nav-item.active { background: var(--blue-soft); color: var(--navy); border-left-color: var(--navy); font-weight: 600; }
 .nav-item .badge { background: var(--line); color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
 .nav-item.active .badge { background: var(--navy); color: white; }
 
 .main { padding: 32px 40px; max-width: 100%; overflow-x: hidden; }
-.page-header { margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.page-header { margin-bottom: 24px; }
 .page-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
-.page-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
-.page-meta strong { color: var(--ink); font-weight: 600; }
 
 .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
 .stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
@@ -96,12 +83,21 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 .stat-card.primary .stat-unit { color: rgba(255,255,255,0.5); }
 .stat-sub { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
 .stat-card.primary .stat-sub { color: rgba(255,255,255,0.55); }
+.stat-pending { color: var(--amber) !important; }
+
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.action-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; cursor: pointer; transition: all 0.15s; text-align: left; font-family: 'Inter', sans-serif; }
+.action-card:hover { border-color: var(--navy); box-shadow: 0 4px 16px rgba(26,44,79,0.08); transform: translateY(-1px); }
+.action-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--blue-soft); color: var(--navy); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.action-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.action-card.compoff .action-icon { background: var(--green-soft); color: var(--green); }
+.action-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.action-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
 .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
 .card-title { font-size: 16px; font-weight: 600; color: var(--ink); }
 .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
-.card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 18px; }
 
 .mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
 .mode-btn { padding: 14px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Inter', sans-serif; }
@@ -112,13 +108,18 @@ html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', san
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
 .form-row.full { grid-template-columns: 1fr; }
+.form-row.three { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; }
 .form-label .hint { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; }
-.form-input { font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); color: var(--ink); outline: none; transition: all 0.2s; width: 100%; }
-.form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
+.form-input, .form-select { font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); color: var(--ink); outline: none; transition: all 0.2s; width: 100%; }
+.form-input:focus, .form-select:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,44,79,0.08); }
 textarea.form-input { resize: vertical; min-height: 80px; font-family: inherit; }
-select.form-input { cursor: pointer; }
+.form-input[type="number"] { -moz-appearance: textfield; }
+.form-input[type="number"]::-webkit-outer-spin-button, .form-input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.time-input-row { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 6px; }
+.time-input-row .form-input, .time-input-row .form-select { padding: 11px 8px; text-align: center; }
 
 .ot-preview { background: var(--blue-soft); border: 1px solid #c5d8f8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; display: none; }
 .ot-preview-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--ink-soft); }
@@ -126,16 +127,15 @@ select.form-input { cursor: pointer; }
 .ot-preview-row.total { border-top: 1px solid rgba(26,44,79,0.15); margin-top: 6px; padding-top: 10px; }
 .ot-preview-row.total span { font-weight: 700; color: var(--navy); font-size: 15px; }
 
-.alloc-box { background: var(--blue-soft); border: 1px solid #c5d8f8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
-.alloc-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); font-weight: 600; margin-bottom: 10px; }
-.alloc-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
-.alloc-row span:first-child { color: var(--ink-soft); }
-.alloc-row span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--navy); }
-.alloc-row.shortfall span:last-child { color: var(--red); }
-.alloc-row.total { border-top: 1px solid rgba(26,44,79,0.2); margin-top: 8px; padding-top: 10px; font-weight: 700; }
-.validation { padding: 10px 14px; border-radius: 6px; font-size: 12px; margin: 12px 0; }
-.validation.warn { background: var(--red-soft); color: var(--red); border: 1px solid #f0c8c8; }
-.validation.ok { background: var(--green-soft); color: var(--green); border: 1px solid #b8d8c0; }
+.alloc-box { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+.alloc-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.alloc-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; border-bottom: 1px dashed var(--line); }
+.alloc-row:last-child { border-bottom: none; }
+.alloc-source { color: var(--ink-soft); }
+.alloc-hours { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--navy); }
+.alloc-shortfall { color: var(--red); }
+.warn-msg { color: var(--red); font-size: 12px; margin-top: 8px; padding: 8px 12px; background: var(--red-soft); border-radius: 6px; }
+.ok-msg { color: var(--green); font-size: 12px; margin-top: 8px; padding: 8px 12px; background: var(--green-soft); border-radius: 6px; }
 
 .pill { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
 .pill-pending { background: var(--amber-soft); color: var(--amber); }
@@ -143,26 +143,38 @@ select.form-input { cursor: pointer; }
 .pill-rejected { background: var(--red-soft); color: var(--red); }
 .pill-wfo-normal { background: var(--blue-soft); color: var(--navy); }
 .pill-wfo-holiday { background: #fde8d8; color: #a04020; }
-.pill-wfh { background: var(--green-soft); color: var(--green); }
-.pill-claimed { background: #ede4f5; color: #6a3a9a; }
+.pill-ot-after-hours { background: var(--green-soft); color: var(--green); }
+.pill-claimed { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+.pill-fully { background: var(--green-soft); color: var(--green); }
+.pill-partial { background: var(--amber-soft); color: var(--amber); }
 
-.entry-row { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 18px; align-items: center; transition: all 0.15s; }
-.entry-row:hover { border-color: var(--navy-light); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.entry-date-block { min-width: 90px; }
-.entry-date { font-size: 13px; font-weight: 600; color: var(--ink); }
-.entry-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
-.entry-body { min-width: 0; }
-.entry-work { font-size: 13px; color: var(--ink); line-height: 1.5; margin-bottom: 6px; }
-.entry-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.entry-mail-tag { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-.entry-hours { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--navy); text-align: right; }
-.entry-hours-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.entry-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.filter-bar .form-select { padding: 7px 10px; font-size: 12px; min-width: 110px; width: auto; }
+.filter-bar .filter-label { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+.filter-bar .filter-spacer { flex: 1; }
 
-.compoff-row { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 16px; align-items: center; }
-.compoff-date { font-size: 14px; font-weight: 600; color: var(--ink); min-width: 100px; }
-.compoff-drawn { font-size: 12px; color: var(--muted); line-height: 1.5; }
-.compoff-hrs { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--navy); }
+.entries-table-wrap { overflow-x: auto; }
+.entries-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.entries-table th { text-align: left; padding: 10px 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--line-strong); white-space: nowrap; }
+.entries-table td { padding: 12px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.entries-table tr:hover { background: var(--surface-2); }
+.entries-table .num { font-family: 'JetBrains Mono', monospace; }
+.entries-table .col-sr { width: 40px; text-align: center; color: var(--muted); }
+.entries-table .col-date { white-space: nowrap; }
+.entries-table .col-time { white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.entries-table .col-mode { white-space: nowrap; }
+.entries-table .col-work { min-width: 180px; max-width: 360px; line-height: 1.5; }
+.entries-table .col-hours { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--navy); text-align: right; white-space: nowrap; }
+.entries-table .col-mail { white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+.entries-table .col-status { white-space: nowrap; }
+.entries-table .col-actions { white-space: nowrap; text-align: right; }
+
+.tooltip-wrap { position: relative; display: inline-block; cursor: help; }
+.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 8px); right: 0; background: var(--ink); color: white; padding: 10px 12px; font-size: 11px; line-height: 1.5; border-radius: 6px; min-width: 220px; max-width: 300px; z-index: 50; transition: opacity 0.15s; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.tooltip-title { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+.tooltip-row { padding: 2px 0; font-family: 'JetBrains Mono', monospace; }
+.tooltip-wrap:hover .tooltip { visibility: visible; opacity: 1; }
+.tooltip::after { content: ''; position: absolute; top: 100%; right: 12px; border: 5px solid transparent; border-top-color: var(--ink); }
 
 .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
 .empty-icon { width: 48px; height: 48px; margin: 0 auto 16px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--muted); }
@@ -174,15 +186,12 @@ select.form-input { cursor: pointer; }
 .spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: white; padding: 13px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2); max-width: 90%; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: white; padding: 13px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; max-width: 90vw; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-
 .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
-.copy-output { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); white-space: pre-wrap; line-height: 1.6; margin: 14px 0; max-height: 200px; overflow-y: auto; }
 
 .mobile-tabs { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 100; }
 .mobile-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--muted); gap: 4px; font-size: 10px; font-weight: 500; }
@@ -198,21 +207,21 @@ select.form-input { cursor: pointer; }
   .stat-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
   .stat-card { padding: 14px 16px; }
   .stat-num { font-size: 26px; }
-  .form-row { grid-template-columns: 1fr; }
+  .form-row, .form-row.three { grid-template-columns: 1fr; }
   .mode-grid { grid-template-columns: 1fr; gap: 8px; }
+  .action-grid { grid-template-columns: 1fr; }
   .mobile-tabs { display: flex; }
   .header-bar { padding: 0 18px; height: 56px; }
   .header-brand { font-size: 15px; }
-  .page-header { margin-bottom: 20px; }
   .page-title { font-size: 20px; }
-  .entry-row { grid-template-columns: 1fr auto; gap: 12px; padding: 14px; }
-  .entry-date-block { grid-column: 1 / 2; }
-  .entry-hours-block { grid-column: 2 / 3; grid-row: 1; text-align: right; }
-  .entry-body { grid-column: 1 / -1; }
-  .entry-actions { grid-column: 1 / -1; justify-content: flex-end; }
-  .compoff-row { grid-template-columns: 1fr auto; gap: 10px; }
-  .compoff-drawn { grid-column: 1 / -1; }
   .card { padding: 18px; }
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; }
+  .entries-table { font-size: 12px; }
+  .entries-table th, .entries-table td { padding: 8px 6px; }
+  .filter-bar { gap: 6px; }
+  .filter-bar .form-select { font-size: 11px; padding: 6px 8px; min-width: 90px; }
+  .tooltip { right: auto; left: 0; min-width: 180px; max-width: 240px; }
 }
 </style>
 </head>
@@ -224,9 +233,9 @@ select.form-input { cursor: pointer; }
     <div class="login-title">Sign in</div>
     <div class="login-sub">Harshil Shah · Communications & Event Production</div>
     <div class="login-error" id="login-error"></div>
-    <div class="field"><label>Email</label><input type="email" id="login-email" autocomplete="email"></div>
-    <div class="field"><label>Password</label><input type="password" id="login-password" autocomplete="current-password"></div>
-    <button class="btn btn-primary full" id="login-btn">Sign In</button>
+    <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+    <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="btn btn-primary btn-block" id="login-btn">Sign In</button>
   </div>
 </div>
 
@@ -248,55 +257,91 @@ select.form-input { cursor: pointer; }
       <div class="sidebar-section">Overview</div>
       <button class="nav-item active" data-tab="dashboard"><span>Dashboard</span></button>
       <button class="nav-item" data-tab="entries"><span>All Entries</span><span class="badge" id="nav-entries-count">0</span></button>
-      <div class="sidebar-section" id="actions-section">Actions</div>
-      <button class="nav-item" data-tab="log" id="nav-log-btn"><span>Log Overtime</span></button>
-      <button class="nav-item" data-tab="compoff" id="nav-compoff-btn"><span>Apply Comp-Off</span></button>
-      <button class="nav-item" data-tab="compoff-history"><span>Comp-Off History</span><span class="badge" id="nav-compoff-count">0</span></button>
       <div class="sidebar-section">Account</div>
       <button class="nav-item" data-tab="account"><span>Settings</span></button>
     </aside>
 
     <main class="main">
-
+      <!-- DASHBOARD -->
       <div class="tab-content active" id="tab-dashboard">
-        <div class="page-header">
-          <div class="page-title">Dashboard</div>
-          <div class="page-meta" id="page-meta-dashboard">—</div>
-        </div>
+        <div class="page-header"><div class="page-title">Dashboard</div></div>
         <div class="stat-strip" id="stat-strip"><div class="loading"><div class="spinner"></div> Loading…</div></div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Recent Entries</div><div class="card-meta">Last 5</div></div>
-          <div id="recent-list"><div class="loading"><div class="spinner"></div></div></div>
+        <div class="action-grid" id="action-grid" style="display:none;">
+          <button class="action-card" data-tab="log">
+            <div class="action-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <div class="action-title">Log Overtime</div>
+            <div class="action-desc">Record a new OT entry with date, time, and work done.</div>
+          </button>
+          <button class="action-card compoff" data-tab="apply-comp">
+            <div class="action-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><polyline points="22 4 12 14 9 11"/></svg>
+            </div>
+            <div class="action-title">Apply Comp-Off</div>
+            <div class="action-desc">Use earned OT hours to take time off. FIFO allocation.</div>
+          </button>
         </div>
       </div>
 
+      <!-- ALL ENTRIES -->
       <div class="tab-content" id="tab-entries">
-        <div class="page-header">
-          <div class="page-title">All Entries</div>
-          <div class="page-meta" id="page-meta-entries">—</div>
+        <div class="page-header"><div class="page-title">All Entries</div></div>
+        <div class="card">
+          <div class="filter-bar">
+            <span class="filter-label">Filter:</span>
+            <select class="form-select" id="filter-year"><option value="">All years</option></select>
+            <select class="form-select" id="filter-month"><option value="">All months</option></select>
+            <select class="form-select" id="filter-mode">
+              <option value="">All modes</option>
+              <option value="wfo-normal">Office (Normal)</option>
+              <option value="wfo-holiday">Office (Holiday)</option>
+              <option value="ot-after-hours">OT After Hours</option>
+            </select>
+            <span class="filter-spacer"></span>
+            <span class="card-meta" id="entries-summary">—</span>
+            <button class="btn btn-secondary btn-sm" id="export-xlsx-btn">📊 Export Excel</button>
+          </div>
+          <div class="entries-table-wrap"><div id="entries-table-container"><div class="loading"><div class="spinner"></div></div></div></div>
         </div>
-        <div class="card"><div id="all-list"><div class="loading"><div class="spinner"></div></div></div></div>
       </div>
 
+      <!-- LOG OT -->
       <div class="tab-content" id="tab-log">
         <div class="page-header"><div class="page-title">Log Overtime</div></div>
         <div class="card">
           <div class="form-label" style="margin-bottom:10px;">Work Mode</div>
           <div class="mode-grid">
-            <div class="mode-btn" data-mode="wfo-normal"><div class="mode-name">Office</div><div class="mode-desc">Normal · 8h30 deducted</div></div>
-            <div class="mode-btn" data-mode="wfo-holiday"><div class="mode-name">Office</div><div class="mode-desc">Holiday · full = OT</div></div>
-            <div class="mode-btn" data-mode="wfh"><div class="mode-name">WFH</div><div class="mode-desc">Full time = OT</div></div>
+            <div class="mode-btn" data-mode="wfo-normal"><div class="mode-name">Office (Normal)</div><div class="mode-desc">8h 30m deducted</div></div>
+            <div class="mode-btn" data-mode="wfo-holiday"><div class="mode-name">Office (Holiday)</div><div class="mode-desc">Full duration = OT</div></div>
+            <div class="mode-btn" data-mode="ot-after-hours"><div class="mode-name">OT After Hours</div><div class="mode-desc">Full duration = OT</div></div>
           </div>
           <div class="form-row">
             <div class="form-field"><label class="form-label">Date</label><input type="date" class="form-input" id="f-date"></div>
-            <div class="form-field"><label class="form-label">Date Range Label <span class="hint">(optional)</span></label><input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr"></div>
+            <div class="form-field"><label class="form-label">Date Range Label <span class="hint">(optional, multi-day)</span></label><input type="text" class="form-input" id="f-label" placeholder="e.g. 4th–9th Apr"></div>
           </div>
-          <div class="form-row" id="time-row">
-            <div class="form-field"><label class="form-label">From</label><input type="time" class="form-input" id="f-from"></div>
-            <div class="form-field"><label class="form-label">To</label><input type="time" class="form-input" id="f-to"></div>
+          <div id="time-row">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label">From Time</label>
+                <div class="time-input-row">
+                  <input type="number" class="form-input" id="f-from-h" min="1" max="12" placeholder="hh">
+                  <input type="number" class="form-input" id="f-from-m" min="0" max="59" placeholder="mm">
+                  <select class="form-select" id="f-from-ap"><option value="AM">AM</option><option value="PM">PM</option></select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label">To Time</label>
+                <div class="time-input-row">
+                  <input type="number" class="form-input" id="f-to-h" min="1" max="12" placeholder="hh">
+                  <input type="number" class="form-input" id="f-to-m" min="0" max="59" placeholder="mm">
+                  <select class="form-select" id="f-to-ap"><option value="AM">AM</option><option value="PM" selected>PM</option></select>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="form-row full" id="manual-row" style="display:none;">
-            <div class="form-field"><label class="form-label">Total OT Hours</label><input type="number" class="form-input" id="f-manual" min="1" max="200"></div>
+            <div class="form-field"><label class="form-label">Total OT Hours <span class="hint">(for date range)</span></label><input type="number" class="form-input" id="f-manual" min="1" max="200"></div>
           </div>
           <div class="form-row full">
             <div class="form-field"><label class="form-label">Work Done</label><textarea class="form-input" id="f-work" placeholder="Describe what you worked on…"></textarea></div>
@@ -312,63 +357,65 @@ select.form-input { cursor: pointer; }
           </div>
           <div class="btn-row">
             <button class="btn btn-primary" id="save-entry-btn">Save Entry</button>
+            <button class="btn btn-secondary" id="cancel-entry-btn">Cancel</button>
           </div>
         </div>
       </div>
 
-      <div class="tab-content" id="tab-compoff">
+      <!-- APPLY COMP-OFF -->
+      <div class="tab-content" id="tab-apply-comp">
         <div class="page-header"><div class="page-title">Apply for Comp-Off</div></div>
         <div class="card">
-          <div class="card-desc">
-            Choose the comp-off type and the date you'll be taking. The system will calculate which OT entries to draw from
-            (oldest first), and give you the formatted text to paste into the BDB HR portal.
-            <br><br>
-            <strong>Rules:</strong> 4 hours (half day) or 8 hours (full day) · Maximum 32 hours (4 days) per calendar month.
-          </div>
-
           <div class="form-row">
             <div class="form-field">
-              <label class="form-label">Comp-Off Type</label>
-              <select class="form-input" id="comp-type">
-                <option value="4">Half Day · 4 hours</option>
-                <option value="8" selected>Full Day · 8 hours</option>
-              </select>
+              <label class="form-label">From Date</label>
+              <input type="date" class="form-input" id="comp-from-date">
             </div>
             <div class="form-field">
-              <label class="form-label">Date Taking Off</label>
-              <input type="date" class="form-input" id="comp-date">
+              <label class="form-label">From Type</label>
+              <select class="form-select" id="comp-from-half">
+                <option value="full">Full Day</option>
+                <option value="first">1st Half</option>
+                <option value="second">2nd Half</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">To Date <span class="hint">(same as From for single day)</span></label>
+              <input type="date" class="form-input" id="comp-to-date">
+            </div>
+            <div class="form-field">
+              <label class="form-label">To Type</label>
+              <select class="form-select" id="comp-to-half">
+                <option value="full">Full Day</option>
+                <option value="first">1st Half</option>
+                <option value="second">2nd Half</option>
+              </select>
             </div>
           </div>
           <div class="form-row full">
             <div class="form-field">
-              <label class="form-label">Reason <span class="hint">(optional)</span></label>
+              <label class="form-label">Reason <span class="hint">(for BDB portal)</span></label>
               <input type="text" class="form-input" id="comp-reason" placeholder="e.g. Personal Work">
             </div>
           </div>
 
           <div class="alloc-box" id="alloc-box" style="display:none;">
-            <div class="alloc-title">Allocation Preview · Drawing from oldest OT entries</div>
+            <div class="alloc-title">Allocation Preview (FIFO)</div>
             <div id="alloc-rows"></div>
           </div>
 
           <div id="comp-validation"></div>
 
-          <div class="btn-row">
-            <button class="btn btn-primary" id="record-copy-btn">📋 Record & Copy for Portal</button>
+          <div class="btn-row" style="margin-top:20px;">
+            <button class="btn btn-primary" id="record-copy-btn">📋 Record &amp; Copy for Portal</button>
+            <button class="btn btn-secondary" id="copy-only-btn">Copy Text Only</button>
           </div>
-
-          <div class="copy-output" id="copy-output" style="display:none;"></div>
         </div>
       </div>
 
-      <div class="tab-content" id="tab-compoff-history">
-        <div class="page-header">
-          <div class="page-title">Comp-Off History</div>
-          <div class="page-meta" id="page-meta-compoff">—</div>
-        </div>
-        <div class="card"><div id="compoff-list"><div class="loading"><div class="spinner"></div></div></div></div>
-      </div>
-
+      <!-- ACCOUNT -->
       <div class="tab-content" id="tab-account">
         <div class="page-header"><div class="page-title">Settings</div></div>
         <div class="card">
@@ -378,32 +425,24 @@ select.form-input { cursor: pointer; }
             <div><strong>Role:</strong> <span id="account-role">—</span></div>
           </div>
         </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">About</div></div>
+          <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+            <p>BDB 341 OT Tracker · v2.0</p>
+            <p style="margin-top:8px;color:var(--muted);">Personal overtime and comp-off tracking system. Data stored in cloud database (Supabase, Mumbai region).</p>
+          </div>
+        </div>
       </div>
-
     </main>
   </div>
 
   <nav class="mobile-tabs">
     <button class="mobile-tab active" data-tab="dashboard">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Home
-    </button>
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Home</button>
     <button class="mobile-tab" data-tab="entries">
-      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
-      Entries
-    </button>
-    <button class="mobile-tab" data-tab="log" id="mobile-log-btn">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      Log
-    </button>
-    <button class="mobile-tab" data-tab="compoff" id="mobile-compoff-btn">
-      <svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      Comp
-    </button>
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>Entries</button>
     <button class="mobile-tab" data-tab="account">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
-      More
-    </button>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>Me</button>
   </nav>
 </div>
 
@@ -414,14 +453,21 @@ const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.pub
 let currentUser = null;
 let isOwner = false;
 let selectedMode = null;
-let allEntries = [];
-let allCompoffs = [];
+let cachedEntries = [];
+let cachedCompoffs = [];
 
+// ─── UTILITIES ───
 function toast(msg, dur) {
+  dur = dur || 2800;
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur || 2500);
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 function fmtDate(iso) {
@@ -430,39 +476,101 @@ function fmtDate(iso) {
   return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
 }
 
-function fmtDateShort(iso) {
+function fmtDateBDB(iso) {
   if (!iso) return '';
   const d = new Date(iso + 'T00:00:00');
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }).replace(/ /g, ' ');
 }
 
-function fmtTime(t) { return t ? t.slice(0,5) : ''; }
-function ymKey(iso) { return iso ? iso.slice(0,7) : ''; }
-function modeLabel(m) { return { 'wfo-normal': 'Office', 'wfo-holiday': 'Holiday', 'wfh': 'WFH' }[m] || m; }
-function modeLabelLong(m) { return { 'wfo-normal': 'Office (Normal)', 'wfo-holiday': 'Office (Holiday)', 'wfh': 'WFH' }[m] || m; }
-function modeShort(m) { return { 'wfo-normal': 'wfo', 'wfo-holiday': 'wfo', 'wfh': 'wfh' }[m] || m; }
-function modePillClass(m) { return { 'wfo-normal': 'pill-wfo-normal', 'wfo-holiday': 'pill-wfo-holiday', 'wfh': 'pill-wfh' }[m] || ''; }
+function fmtTime12(t24) {
+  if (!t24) return '';
+  const [h, m] = t24.split(':').map(Number);
+  const ap = h >= 12 ? 'PM' : 'AM';
+  const h12 = h === 0 ? 12 : (h > 12 ? h - 12 : h);
+  return h12 + ':' + String(m).padStart(2, '0') + ' ' + ap;
+}
 
-function computeOT(from, to, mode) {
-  if (!from || !to) return 0;
-  const [fh, fm] = from.split(':').map(Number);
-  const [th, tm] = to.split(':').map(Number);
+function to24h(h, m, ap) {
+  h = parseInt(h); m = parseInt(m);
+  if (isNaN(h) || isNaN(m)) return null;
+  if (ap === 'PM' && h !== 12) h += 12;
+  if (ap === 'AM' && h === 12) h = 0;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+
+function modeLabel(m) {
+  return { 'wfo-normal': 'Office (Normal)', 'wfo-holiday': 'Office (Holiday)', 'ot-after-hours': 'OT After Hours', 'wfh': 'WFH' }[m] || m;
+}
+
+function modePillClass(m) {
+  return { 'wfo-normal': 'pill-wfo-normal', 'wfo-holiday': 'pill-wfo-holiday', 'ot-after-hours': 'pill-ot-after-hours', 'wfh': 'pill-ot-after-hours' }[m] || '';
+}
+
+function modeShortLabel(m) {
+  return { 'wfo-normal': 'wfo', 'wfo-holiday': 'wfo-holiday', 'ot-after-hours': 'ot', 'wfh': 'wfh' }[m] || m;
+}
+
+// FLOOR to whole hours (must complete the hour)
+function computeOT(from24, to24, mode) {
+  if (!from24 || !to24) return 0;
+  const [fh, fm] = from24.split(':').map(Number);
+  const [th, tm] = to24.split(':').map(Number);
   let mins = (th * 60 + tm) - (fh * 60 + fm);
   if (mins < 0) mins += 24 * 60;
-  const hrs = mins / 60;
-  if (mode === 'wfo-normal') return Math.max(0, Math.round(hrs - 8.5));
-  return Math.round(hrs);
+  let workedHrs = mins / 60;
+  if (mode === 'wfo-normal') workedHrs = workedHrs - 8.5;
+  if (workedHrs <= 0) return 0;
+  return Math.floor(workedHrs);
 }
 
-function totalDuration(from, to) {
-  if (!from || !to) return 0;
-  const [fh, fm] = from.split(':').map(Number);
-  const [th, tm] = to.split(':').map(Number);
+function totalDuration(from24, to24) {
+  if (!from24 || !to24) return 0;
+  const [fh, fm] = from24.split(':').map(Number);
+  const [th, tm] = to24.split(':').map(Number);
   let mins = (th * 60 + tm) - (fh * 60 + fm);
   if (mins < 0) mins += 24 * 60;
   return mins / 60;
 }
 
+// Convert a half-day descriptor to hours
+function halfToHours(half) {
+  return half === 'full' ? 8 : 4;
+}
+
+// Calculate total comp-off hours for a date range
+function calcCompoffHours(fromDate, fromHalf, toDate, toHalf) {
+  if (!fromDate) return 0;
+  const from = new Date(fromDate + 'T00:00:00');
+  const to = toDate ? new Date(toDate + 'T00:00:00') : from;
+
+  if (from.getTime() === to.getTime()) {
+    // Single day — use fromHalf only
+    return halfToHours(fromHalf);
+  }
+  if (from > to) return 0;
+
+  // Multiple days
+  const dayCount = Math.round((to - from) / (1000 * 60 * 60 * 24)) + 1;
+  let total = halfToHours(fromHalf) + halfToHours(toHalf);
+  // Middle days (full)
+  if (dayCount > 2) total += (dayCount - 2) * 8;
+  return total;
+}
+
+// Compose a human description of comp-off range
+function describeCompoffRange(fromDate, fromHalf, toDate, toHalf) {
+  if (!fromDate) return '';
+  const sameDay = !toDate || fromDate === toDate;
+  if (sameDay) {
+    const halfText = fromHalf === 'full' ? 'Full Day' : (fromHalf === 'first' ? '1st Half' : '2nd Half');
+    return fmtDate(fromDate) + ' (' + halfText + ')';
+  }
+  const fromText = fmtDate(fromDate) + (fromHalf === 'full' ? '' : ' (' + (fromHalf === 'first' ? '1st Half' : '2nd Half') + ')');
+  const toText = fmtDate(toDate) + (toHalf === 'full' ? '' : ' (' + (toHalf === 'first' ? '1st Half' : '2nd Half') + ')');
+  return fromText + ' → ' + toText;
+}
+
+// ─── AUTH ───
 async function initApp(user) {
   try {
     currentUser = user;
@@ -476,17 +584,15 @@ async function initApp(user) {
 
     if (!isOwner) {
       document.getElementById('viewer-badge').style.display = 'inline-flex';
-      document.getElementById('nav-log-btn').style.display = 'none';
-      document.getElementById('nav-compoff-btn').style.display = 'none';
-      document.getElementById('mobile-log-btn').style.display = 'none';
-      document.getElementById('mobile-compoff-btn').style.display = 'none';
-      document.getElementById('actions-section').style.display = 'none';
     }
 
     document.getElementById('login-btn').disabled = false;
     document.getElementById('login-btn').textContent = 'Sign In';
 
-    await loadAllData();
+    await refreshAll();
+    if (isOwner) {
+      document.getElementById('action-grid').style.display = 'grid';
+    }
   } catch (err) {
     console.error('initApp ERROR:', err);
     alert('Init error: ' + (err.message || err));
@@ -500,25 +606,10 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const password = document.getElementById('login-password').value;
   const btn = document.getElementById('login-btn');
   const errEl = document.getElementById('login-error');
-
-  if (!email || !password) {
-    errEl.textContent = 'Please enter your email and password.';
-    errEl.style.display = 'block';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = 'Signing in…';
-  errEl.style.display = 'none';
-
+  if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; errEl.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = 'Signing in…'; errEl.style.display = 'none';
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    errEl.textContent = 'Incorrect email or password.';
-    errEl.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Sign In';
-    return;
-  }
+  if (error) { errEl.textContent = 'Incorrect email or password.'; errEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Sign In'; return; }
   await initApp(data.user);
 });
 
@@ -528,8 +619,7 @@ document.getElementById('login-password').addEventListener('keydown', e => {
 
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await sb.auth.signOut();
-  currentUser = null;
-  isOwner = false;
+  currentUser = null; isOwner = false;
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-email').value = '';
@@ -541,184 +631,222 @@ window.addEventListener('load', async () => {
   if (session?.user) await initApp(session.user);
 });
 
+// ─── TABS ───
 function switchTab(tab) {
-  document.querySelectorAll('.nav-item, .mobile-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-item, .mobile-tab, .action-card').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('[data-tab="' + tab + '"]').forEach(b => b.classList.add('active'));
-  const target = document.getElementById('tab-' + tab);
-  if (target) target.classList.add('active');
+  const el = document.getElementById('tab-' + tab);
+  if (el) el.classList.add('active');
+  if (tab === 'apply-comp') updateAllocationPreview();
+  window.scrollTo(0, 0);
 }
-document.querySelectorAll('.nav-item, .mobile-tab').forEach(btn => {
-  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+document.querySelectorAll('.nav-item, .mobile-tab, .action-card').forEach(btn => {
+  btn.addEventListener('click', () => { if (btn.dataset.tab) switchTab(btn.dataset.tab); });
 });
 
 // ─── DATA LOADING ───
-async function loadAllData() {
-  // Load entries with their allocations
-  const { data: entries } = await sb.from('entries').select('*').order('entry_date', { ascending: true, nullsFirst: false });
-  const { data: compoffs } = await sb.from('compoffs').select('*').order('taken_date', { ascending: false });
-  const { data: allocations } = await sb.from('compoff_allocations').select('*');
-
-  allEntries = entries || [];
-  allCompoffs = compoffs || [];
-
-  // Attach allocations to entries
-  allEntries.forEach(e => {
-    e.allocations = (allocations || []).filter(a => a.entry_id === e.id);
-    e.hours_used = e.allocations.reduce((s, a) => s + a.hours_drawn, 0);
-    e.hours_available = e.ot_hours - e.hours_used;
-  });
-
-  // Attach allocations and entry refs to compoffs
-  allCompoffs.forEach(c => {
-    c.allocations = (allocations || []).filter(a => a.compoff_id === c.id).map(a => {
-      const ent = allEntries.find(e => e.id === a.entry_id);
-      return Object.assign({}, a, { entry: ent });
-    });
-  });
-
+async function refreshAll() {
+  await loadEntries();
+  await loadCompoffs();
   renderDashboard();
   renderEntries();
-  renderCompoffHistory();
+  populateFilters();
+  updateAllocationPreview();
 }
 
+async function loadEntries() {
+  const { data } = await sb.from('entries').select('*, compoff_allocations(compoff_id, hours_drawn)').order('entry_date', { ascending: false, nullsFirst: false });
+  cachedEntries = data || [];
+}
+
+async function loadCompoffs() {
+  const { data } = await sb.from('compoffs').select('*, compoff_allocations(entry_id, hours_drawn)').order('taken_date', { ascending: false });
+  cachedCompoffs = data || [];
+}
+
+// ─── BALANCE CALCULATIONS ───
+function entryClaimedHours(entry) {
+  return (entry.compoff_allocations || []).reduce((s, a) => s + a.hours_drawn, 0);
+}
+function entryAvailableHours(entry) { return entry.ot_hours - entryClaimedHours(entry); }
+function totalOTEarned() { return cachedEntries.reduce((s, e) => s + e.ot_hours, 0); }
+function totalOTEarnedYear(year) {
+  return cachedEntries.filter(e => {
+    const d = e.entry_date || (e.date_label ? extractYearFromLabel(e.date_label) : null);
+    if (!d) return false;
+    return d.startsWith(String(year));
+  }).reduce((s, e) => s + e.ot_hours, 0);
+}
+function extractYearFromLabel(label) {
+  const m = label.match(/20\d{2}/);
+  return m ? m[0] : null;
+}
+function totalCompApproved() { return cachedCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').reduce((s, c) => s + c.hours, 0); }
+function totalCompPending() { return cachedCompoffs.filter(c => c.status === 'pending').reduce((s, c) => s + c.hours, 0); }
+function totalCompUsedAll() { return totalCompApproved() + totalCompPending(); }
+function availableBalance() { return totalOTEarned() - totalCompUsedAll(); }
+function compHoursInMonth(ym) {
+  return cachedCompoffs.filter(c => c.taken_date && c.taken_date.startsWith(ym) && (c.status === 'approved' || c.status === 'verbally_approved' || c.status === 'pending')).reduce((s, c) => s + c.hours, 0);
+}
+
+// ─── DASHBOARD ───
 function renderDashboard() {
   const grid = document.getElementById('stat-strip');
-  const totalOT = allEntries.reduce((s, e) => s + e.ot_hours, 0);
-  const compUsed = allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').reduce((s, c) => s + c.hours, 0);
-  const compPending = allCompoffs.filter(c => c.status === 'pending').reduce((s, c) => s + c.hours, 0);
-  const balance = totalOT - compUsed - compPending;
+  const balance = availableBalance();
+  const earned = totalOTEarned();
+  const used = totalCompApproved();
+  const pending = totalCompPending();
+  const usedTotal = used + pending;
+  const currentYear = new Date().getFullYear();
+  const earnedThisYear = totalOTEarnedYear(currentYear);
+  const today = new Date();
+  const ym = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+  const monthName = today.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  const usedThisMonth = compHoursInMonth(ym);
 
   grid.innerHTML =
     '<div class="stat-card primary">' +
       '<div class="stat-label">Available Balance</div>' +
       '<div><span class="stat-num">' + balance + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">' + totalOT + ' earned − ' + (compUsed + compPending) + ' allocated</div>' +
+      '<div class="stat-sub">' + earned + ' earned − ' + usedTotal + ' used</div>' +
     '</div>' +
     '<div class="stat-card">' +
-      '<div class="stat-label">OT Earned</div>' +
-      '<div><span class="stat-num">' + totalOT + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">' + allEntries.length + ' entries</div>' +
+      '<div class="stat-label">OT Earned in ' + currentYear + '</div>' +
+      '<div><span class="stat-num">' + earnedThisYear + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub">Year-to-date</div>' +
     '</div>' +
     '<div class="stat-card">' +
-      '<div class="stat-label">Comp Used</div>' +
-      '<div><span class="stat-num">' + compUsed + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">' + allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').length + ' approved</div>' +
+      '<div class="stat-label">Comp Used Total</div>' +
+      '<div><span class="stat-num">' + usedTotal + '</span><span class="stat-unit">hrs</span></div>' +
+      '<div class="stat-sub' + (pending > 0 ? ' stat-pending' : '') + '">' + (pending > 0 ? pending + ' hrs awaiting approval' : 'All approved') + '</div>' +
     '</div>' +
     '<div class="stat-card">' +
-      '<div class="stat-label">Pending Comp</div>' +
-      '<div><span class="stat-num">' + compPending + '</span><span class="stat-unit">hrs</span></div>' +
-      '<div class="stat-sub">Awaiting approval</div>' +
+      '<div class="stat-label">Used in ' + monthName + '</div>' +
+      '<div><span class="stat-num">' + usedThisMonth + '</span><span class="stat-unit">/ 32</span></div>' +
+      '<div class="stat-sub">Monthly cap</div>' +
     '</div>';
+}
 
-  document.getElementById('page-meta-dashboard').innerHTML = '<strong>' + totalOT + '</strong> hrs earned · <strong>' + balance + '</strong> hrs available';
+// ─── ENTRIES TABLE ───
+let activeFilters = { year: '', month: '', mode: '', search: '' };
 
-  const recent = [].concat(allEntries).reverse().slice(0, 5);
-  renderEntryList(recent, 'recent-list');
+function populateFilters() {
+  const years = [...new Set(cachedEntries.map(e => {
+    if (e.entry_date) return e.entry_date.slice(0, 4);
+    if (e.date_label) return extractYearFromLabel(e.date_label);
+    return null;
+  }).filter(Boolean))].sort().reverse();
+
+  const yearSel = document.getElementById('filter-year');
+  const cur = yearSel.value;
+  yearSel.innerHTML = '<option value="">All years</option>' + years.map(y => '<option value="' + y + '"' + (y === cur ? ' selected' : '') + '>' + y + '</option>').join('');
+
+  const months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const monthSel = document.getElementById('filter-month');
+  const curM = monthSel.value;
+  monthSel.innerHTML = '<option value="">All months</option>' + months.map((m, i) => '<option value="' + m + '"' + (m === curM ? ' selected' : '') + '>' + monthNames[i] + '</option>').join('');
 }
 
 function renderEntries() {
-  const reversed = [].concat(allEntries).reverse();
-  document.getElementById('page-meta-entries').innerHTML = '<strong>' + allEntries.length + '</strong> entries · <strong>' + allEntries.reduce((s, e) => s + e.ot_hours, 0) + '</strong> OT hours';
-  document.getElementById('nav-entries-count').textContent = allEntries.length;
-  renderEntryList(reversed, 'all-list');
-}
-
-function renderEntryList(entries, containerId) {
-  const el = document.getElementById(containerId);
-  if (entries.length === 0) {
-    el.innerHTML =
-      '<div class="empty">' +
-        '<div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>' +
-        '<div class="empty-text">No entries yet</div>' +
-        '<div class="empty-hint">' + (isOwner ? 'Click "Log Overtime" to add your first entry.' : 'No entries to view.') + '</div>' +
-      '</div>';
-    return;
+  let filtered = cachedEntries.slice();
+  if (activeFilters.year) {
+    filtered = filtered.filter(e => {
+      const d = e.entry_date || (e.date_label ? extractYearFromLabel(e.date_label) : null);
+      return d && d.startsWith(activeFilters.year);
+    });
   }
-  el.innerHTML = entries.map(e => {
-    const statusPill = e.status === 'approved' ? '<span class="pill pill-approved">Approved</span>'
-      : e.status === 'rejected' ? '<span class="pill pill-rejected">Rejected</span>'
-      : '<span class="pill pill-pending">Pending</span>';
-    const modePill = '<span class="pill ' + modePillClass(e.mode) + '">' + modeLabel(e.mode) + '</span>';
-    const claimedPill = e.hours_used > 0
-      ? '<span class="pill pill-claimed">' + (e.hours_used >= e.ot_hours ? 'Fully Claimed' : e.hours_used + '/' + e.ot_hours + ' Claimed') + '</span>'
-      : '';
-    const timeStr = e.time_from && e.time_to ? fmtTime(e.time_from) + ' – ' + fmtTime(e.time_to) : '';
-    const mailDate = e.mail_date ? '<span class="entry-mail-tag">📧 ' + fmtDate(e.mail_date) + '</span>' : '';
-    let actions = '';
-    if (isOwner) {
-      if (e.status === 'logged' || e.status === 'pending') {
-        actions += '<button class="btn btn-success btn-sm" onclick="markApproved(\'' + e.id + '\')">Approve</button>';
-      }
-      if (e.hours_used === 0) {
-        actions += '<button class="btn btn-danger btn-sm" onclick="deleteEntry(\'' + e.id + '\')">Delete</button>';
-      }
-    }
-    return '<div class="entry-row">' +
-      '<div class="entry-date-block">' +
-        '<div class="entry-date">' + (e.date_label || fmtDate(e.entry_date)) + '</div>' +
-        (timeStr ? '<div class="entry-time">' + timeStr + '</div>' : '') +
-      '</div>' +
-      '<div class="entry-body">' +
-        '<div class="entry-work">' + (e.work_done || '') + '</div>' +
-        '<div class="entry-tags">' + statusPill + modePill + claimedPill + mailDate + '</div>' +
-      '</div>' +
-      '<div class="entry-hours-block">' +
-        '<div class="entry-hours">' + e.ot_hours + '</div>' +
-        '<div class="entry-hours-label">OT hrs</div>' +
-      '</div>' +
-      (actions ? '<div class="entry-actions">' + actions + '</div>' : '') +
-    '</div>';
-  }).join('');
-}
+  if (activeFilters.month) {
+    filtered = filtered.filter(e => {
+      if (!e.entry_date) return false;
+      return e.entry_date.slice(5, 7) === activeFilters.month;
+    });
+  }
+  if (activeFilters.mode) {
+    filtered = filtered.filter(e => e.mode === activeFilters.mode);
+  }
+  if (activeFilters.search) {
+    const q = activeFilters.search.toLowerCase();
+    filtered = filtered.filter(e =>
+      (e.work_done || '').toLowerCase().includes(q)
+      || (e.date_label || '').toLowerCase().includes(q)
+      || (e.entry_date || '').includes(q)
+      || modeLabel(e.mode).toLowerCase().includes(q)
+    );
+  }
 
-function renderCompoffHistory() {
-  const el = document.getElementById('compoff-list');
-  document.getElementById('nav-compoff-count').textContent = allCompoffs.length;
-  const totalUsed = allCompoffs.filter(c => c.status === 'approved' || c.status === 'verbally_approved').reduce((s, c) => s + c.hours, 0);
-  document.getElementById('page-meta-compoff').innerHTML = '<strong>' + allCompoffs.length + '</strong> applications · <strong>' + totalUsed + '</strong> approved hours';
+  const totalOT = filtered.reduce((s, e) => s + (e.ot_hours || 0), 0);
+  document.getElementById('entries-summary').innerHTML = filtered.length + ' entries · ' + totalOT + ' hrs';
+  document.getElementById('nav-entries-count').textContent = cachedEntries.length;
 
-  if (allCompoffs.length === 0) {
-    el.innerHTML =
-      '<div class="empty">' +
-        '<div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div>' +
-        '<div class="empty-text">No comp-offs applied yet</div>' +
-      '</div>';
+  const container = document.getElementById('entries-table-container');
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="empty-text">No entries match these filters</div><div class="empty-hint">Try clearing filters above.</div></div>';
     return;
   }
 
-  el.innerHTML = allCompoffs.map(c => {
-    const statusPill = c.status === 'approved' ? '<span class="pill pill-approved">Approved</span>'
-      : c.status === 'verbally_approved' ? '<span class="pill pill-approved">Verbal</span>'
-      : c.status === 'rejected' ? '<span class="pill pill-rejected">Rejected</span>'
-      : c.status === 'cancelled' ? '<span class="pill pill-rejected">Cancelled</span>'
-      : '<span class="pill pill-pending">Pending</span>';
-    const drawnLines = c.allocations.map(a => {
-      const ent = a.entry;
-      const lbl = ent ? (ent.date_label || fmtDate(ent.entry_date)) : '(removed)';
-      return lbl + ' (' + a.hours_drawn + 'h)';
-    }).join(' · ');
-    let actions = '';
-    if (isOwner) {
-      if (c.status === 'pending') {
-        actions += '<button class="btn btn-success btn-sm" onclick="approveCompoff(\'' + c.id + '\')">Mark Approved</button>';
-        actions += '<button class="btn btn-danger btn-sm" onclick="rejectCompoff(\'' + c.id + '\')">Reject</button>';
-      }
-      actions += '<button class="btn btn-secondary btn-sm" onclick="copyCompoff(\'' + c.id + '\')">📋 Copy</button>';
+  let html = '<table class="entries-table"><thead><tr>' +
+    '<th class="col-sr">SR</th>' +
+    '<th class="col-date">Date</th>' +
+    '<th class="col-time">Time</th>' +
+    '<th class="col-mode">Mode</th>' +
+    '<th class="col-work">Work Done</th>' +
+    '<th class="col-hours">OT hrs</th>' +
+    '<th class="col-mail">Mail Date</th>' +
+    '<th class="col-status">Comp Status</th>' +
+    (isOwner ? '<th class="col-actions"></th>' : '') +
+    '</tr></thead><tbody>';
+
+  filtered.forEach((e, idx) => {
+    const claimed = entryClaimedHours(e);
+    const allocs = e.compoff_allocations || [];
+    let statusCell;
+    if (claimed === 0) {
+      statusCell = '<span class="pill pill-claimed">Available</span>';
+    } else {
+      const tipRows = allocs.map(a => {
+        const c = cachedCompoffs.find(x => x.id === a.compoff_id);
+        return '<div class="tooltip-row">' + (c ? fmtDate(c.taken_date) : '—') + ' · ' + a.hours_drawn + 'h</div>';
+      }).join('');
+      const fullyClaimed = claimed >= e.ot_hours;
+      const label = fullyClaimed ? 'Fully Claimed' : claimed + '/' + e.ot_hours + ' claimed';
+      const cls = fullyClaimed ? 'pill-fully' : 'pill-partial';
+      statusCell = '<span class="tooltip-wrap"><span class="pill ' + cls + '">' + label + '</span><div class="tooltip"><div class="tooltip-title">Claimed By</div>' + tipRows + '</div></span>';
     }
-    return '<div class="compoff-row">' +
-      '<div class="compoff-date">' + fmtDate(c.taken_date) + '</div>' +
-      '<div>' +
-        '<div style="display:flex;gap:6px;margin-bottom:5px;">' + statusPill + (c.hours === 4 ? '<span class="pill pill-claimed">Half Day</span>' : '<span class="pill pill-claimed">Full Day</span>') + '</div>' +
-        '<div class="compoff-drawn">From: ' + drawnLines + '</div>' +
-      '</div>' +
-      '<div class="compoff-hrs">' + c.hours + 'h</div>' +
-      (actions ? '<div class="entry-actions">' + actions + '</div>' : '') +
-    '</div>';
-  }).join('');
+
+    const dateCell = e.date_label ? escapeHtml(e.date_label) : fmtDate(e.entry_date);
+    const timeCell = e.time_from && e.time_to ? fmtTime12(e.time_from) + ' – ' + fmtTime12(e.time_to) : '—';
+    const mailCell = e.mail_date ? fmtDate(e.mail_date) : '—';
+    const deleteBtn = isOwner && claimed === 0 ? '<button class="btn btn-danger btn-sm" onclick="deleteEntry(\'' + e.id + '\')">×</button>' : '';
+
+    html += '<tr>' +
+      '<td class="col-sr num">' + (idx + 1) + '</td>' +
+      '<td class="col-date">' + dateCell + '</td>' +
+      '<td class="col-time">' + timeCell + '</td>' +
+      '<td class="col-mode"><span class="pill ' + modePillClass(e.mode) + '">' + modeLabel(e.mode) + '</span></td>' +
+      '<td class="col-work">' + escapeHtml(e.work_done) + '</td>' +
+      '<td class="col-hours">' + e.ot_hours + '</td>' +
+      '<td class="col-mail">' + mailCell + '</td>' +
+      '<td class="col-status">' + statusCell + '</td>' +
+      (isOwner ? '<td class="col-actions">' + deleteBtn + '</td>' : '') +
+      '</tr>';
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
 }
 
-// ─── LOG ENTRY ───
+document.getElementById('filter-year').addEventListener('change', e => { activeFilters.year = e.target.value; renderEntries(); });
+document.getElementById('filter-month').addEventListener('change', e => { activeFilters.month = e.target.value; renderEntries(); });
+document.getElementById('filter-mode').addEventListener('change', e => { activeFilters.mode = e.target.value; renderEntries(); });
+document.getElementById('search-input').addEventListener('input', e => {
+  activeFilters.search = e.target.value.trim();
+  renderEntries();
+  if (activeFilters.search) switchTab('entries');
+});
+
+// ─── LOG OT ───
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -731,20 +859,26 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
 document.getElementById('f-label').addEventListener('input', () => {
   const hasLabel = document.getElementById('f-label').value.trim();
   document.getElementById('manual-row').style.display = hasLabel ? 'grid' : 'none';
-  document.getElementById('time-row').style.display = hasLabel ? 'none' : 'grid';
+  document.getElementById('time-row').style.display = hasLabel ? 'none' : 'block';
   updatePreview();
 });
 
-['f-from', 'f-to', 'f-manual'].forEach(id => {
+['f-from-h', 'f-from-m', 'f-from-ap', 'f-to-h', 'f-to-m', 'f-to-ap', 'f-manual'].forEach(id => {
   document.getElementById(id).addEventListener('input', updatePreview);
+  document.getElementById(id).addEventListener('change', updatePreview);
 });
+
+function getFromTime() {
+  return to24h(document.getElementById('f-from-h').value, document.getElementById('f-from-m').value, document.getElementById('f-from-ap').value);
+}
+function getToTime() {
+  return to24h(document.getElementById('f-to-h').value, document.getElementById('f-to-m').value, document.getElementById('f-to-ap').value);
+}
 
 function updatePreview() {
   const preview = document.getElementById('ot-preview');
   const hasLabel = document.getElementById('f-label').value.trim();
   const manual = document.getElementById('f-manual').value;
-  const from = document.getElementById('f-from').value;
-  const to = document.getElementById('f-to').value;
 
   if (!selectedMode) { preview.style.display = 'none'; return; }
   if (hasLabel && manual) {
@@ -754,25 +888,50 @@ function updatePreview() {
     document.getElementById('prev-ot').textContent = manual + ' hrs';
     return;
   }
-  if (!from || !to) { preview.style.display = 'none'; return; }
-  const dur = totalDuration(from, to);
-  const ot = computeOT(from, to, selectedMode);
+
+  const from24 = getFromTime();
+  const to24 = getToTime();
+  if (!from24 || !to24) { preview.style.display = 'none'; return; }
+
+  const dur = totalDuration(from24, to24);
+  const ot = computeOT(from24, to24, selectedMode);
   preview.style.display = 'block';
-  document.getElementById('prev-duration').textContent = dur.toFixed(1) + ' hrs';
-  if (selectedMode === 'wfo-normal') {
-    document.getElementById('prev-deduct-row').style.display = 'flex';
-  } else {
-    document.getElementById('prev-deduct-row').style.display = 'none';
-  }
-  document.getElementById('prev-ot').textContent = ot + ' hrs';
+  document.getElementById('prev-duration').textContent = dur.toFixed(2) + ' hrs (' + Math.floor(dur) + 'h ' + Math.round((dur - Math.floor(dur)) * 60) + 'm)';
+  document.getElementById('prev-deduct-row').style.display = selectedMode === 'wfo-normal' ? 'flex' : 'none';
+  document.getElementById('prev-ot').textContent = ot + ' hrs (must complete the hour to earn it)';
 }
+
+function clearLogForm() {
+  document.getElementById('f-date').value = '';
+  document.getElementById('f-label').value = '';
+  document.getElementById('f-from-h').value = '';
+  document.getElementById('f-from-m').value = '';
+  document.getElementById('f-from-ap').value = 'AM';
+  document.getElementById('f-to-h').value = '';
+  document.getElementById('f-to-m').value = '';
+  document.getElementById('f-to-ap').value = 'PM';
+  document.getElementById('f-work').value = '';
+  document.getElementById('f-manual').value = '';
+  document.getElementById('f-mail-date').value = '';
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  selectedMode = null;
+  document.getElementById('ot-preview').style.display = 'none';
+  document.getElementById('time-row').style.display = 'block';
+  document.getElementById('manual-row').style.display = 'none';
+  document.getElementById('f-date').valueAsDate = new Date();
+}
+
+document.getElementById('cancel-entry-btn').addEventListener('click', () => {
+  clearLogForm();
+  switchTab('dashboard');
+});
 
 document.getElementById('save-entry-btn').addEventListener('click', async () => {
   if (!isOwner) return;
   const date = document.getElementById('f-date').value;
   const label = document.getElementById('f-label').value.trim();
-  const from = document.getElementById('f-from').value;
-  const to = document.getElementById('f-to').value;
+  const from24 = getFromTime();
+  const to24 = getToTime();
   const work = document.getElementById('f-work').value.trim();
   const manual = document.getElementById('f-manual').value;
   const mailDate = document.getElementById('f-mail-date').value;
@@ -784,11 +943,12 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   let otHours;
   if (label && manual) {
     otHours = parseInt(manual);
+    if (!otHours || otHours <= 0) { toast('Enter valid OT hours'); return; }
   } else {
-    if (!from || !to) { toast('Please enter times'); return; }
-    otHours = computeOT(from, to, selectedMode);
-    if (otHours <= 0 && selectedMode === 'wfo-normal') { toast('No OT earned on normal days < 8h30m'); return; }
-    if (otHours <= 0) { toast('Minimum 1 hour'); return; }
+    if (!from24 || !to24) { toast('Please enter complete times (hours, minutes, AM/PM)'); return; }
+    otHours = computeOT(from24, to24, selectedMode);
+    if (otHours <= 0 && selectedMode === 'wfo-normal') { toast('No OT — need to work over 9h 30m on a normal day'); return; }
+    if (otHours <= 0) { toast('Need at least 1 full hour of work'); return; }
   }
 
   const btn = document.getElementById('save-entry-btn');
@@ -798,8 +958,8 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
   const { error } = await sb.from('entries').insert({
     entry_date: date || null,
     date_label: label || null,
-    time_from: from || null,
-    time_to: to || null,
+    time_from: from24 || null,
+    time_to: to24 || null,
     mode: selectedMode,
     work_done: work,
     ot_hours: otHours,
@@ -810,219 +970,13 @@ document.getElementById('save-entry-btn').addEventListener('click', async () => 
 
   btn.disabled = false;
   btn.textContent = 'Save Entry';
-
   if (error) { toast('Error: ' + error.message); return; }
 
-  document.getElementById('f-date').value = '';
-  document.getElementById('f-label').value = '';
-  document.getElementById('f-from').value = '';
-  document.getElementById('f-to').value = '';
-  document.getElementById('f-work').value = '';
-  document.getElementById('f-manual').value = '';
-  document.getElementById('f-mail-date').value = '';
-  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  selectedMode = null;
-  document.getElementById('ot-preview').style.display = 'none';
-  document.getElementById('manual-row').style.display = 'none';
-  document.getElementById('time-row').style.display = 'grid';
-
-  toast('Entry saved ✓');
-  await loadAllData();
+  clearLogForm();
+  toast('Entry saved · ' + otHours + ' OT hrs credited ✓');
+  await refreshAll();
   switchTab('entries');
 });
-
-// ─── COMP-OFF FEATURE ───
-function planAllocation(hoursWanted) {
-  // FIFO: oldest entry with available hours first, only from approved entries
-  const candidates = allEntries
-    .filter(e => e.status === 'approved')
-    .filter(e => e.hours_available > 0)
-    .slice()
-    .sort((a, b) => {
-      const ad = a.entry_date || '9999';
-      const bd = b.entry_date || '9999';
-      return ad.localeCompare(bd);
-    });
-
-  let need = hoursWanted;
-  const allocations = [];
-  for (const e of candidates) {
-    if (need <= 0) break;
-    const take = Math.min(need, e.hours_available);
-    allocations.push({ entry: e, hours: take });
-    need -= take;
-  }
-  return { allocations: allocations, shortfall: need };
-}
-
-function compHoursThisMonth(targetYM) {
-  return allCompoffs
-    .filter(c => ymKey(c.taken_date) === targetYM)
-    .filter(c => c.status === 'approved' || c.status === 'verbally_approved' || c.status === 'pending')
-    .reduce((s, c) => s + c.hours, 0);
-}
-
-function ymLabel(ym) {
-  if (!ym) return '';
-  const parts = ym.split('-');
-  return new Date(+parts[0], +parts[1]-1, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-}
-
-function updateCompPreview() {
-  const hours = parseInt(document.getElementById('comp-type').value);
-  const date = document.getElementById('comp-date').value;
-  const allocBox = document.getElementById('alloc-box');
-  const valEl = document.getElementById('comp-validation');
-
-  const plan = planAllocation(hours);
-
-  if (plan.allocations.length === 0 && plan.shortfall === hours) {
-    allocBox.style.display = 'none';
-  } else {
-    allocBox.style.display = 'block';
-    let html = plan.allocations.map(a => {
-      const lbl = a.entry.date_label || fmtDate(a.entry.entry_date);
-      return '<div class="alloc-row"><span>' + lbl + '</span><span>' + a.hours + ' hrs</span></div>';
-    }).join('');
-    if (plan.shortfall > 0) {
-      html += '<div class="alloc-row shortfall"><span>Shortfall</span><span>' + plan.shortfall + ' hrs</span></div>';
-    }
-    const totalAllocated = hours - plan.shortfall;
-    html += '<div class="alloc-row total"><span>Total drawn</span><span>' + totalAllocated + ' / ' + hours + ' hrs</span></div>';
-    document.getElementById('alloc-rows').innerHTML = html;
-  }
-
-  valEl.innerHTML = '';
-  const totalOT = allEntries.filter(e => e.status === 'approved').reduce((s, e) => s + e.hours_available, 0);
-
-  if (plan.shortfall > 0) {
-    valEl.innerHTML += '<div class="validation warn">⚠ Insufficient approved OT balance. You only have ' + totalOT + ' hrs available, need ' + hours + '.</div>';
-  }
-  if (date) {
-    const ym = ymKey(date);
-    const usedThisMonth = compHoursThisMonth(ym);
-    const wouldBe = usedThisMonth + hours;
-    if (wouldBe > 32) {
-      valEl.innerHTML += '<div class="validation warn">⚠ Exceeds 32-hour monthly cap. ' + usedThisMonth + ' already used in ' + ymLabel(ym) + '.</div>';
-    } else {
-      valEl.innerHTML += '<div class="validation ok">✓ ' + wouldBe + '/32 hours used in ' + ymLabel(ym) + ' after this application.</div>';
-    }
-  }
-}
-
-document.getElementById('comp-type').addEventListener('change', updateCompPreview);
-document.getElementById('comp-date').addEventListener('change', updateCompPreview);
-
-function buildPortalText(hours, allocations, reason) {
-  // Format: "Applying 8hr CO- against OT - *28 Jan 26 | 8:00AM – 9:39PM (wfo) → 5hr (Using 4 | Used 1 on 15-04-26)"
-  let txt = 'Applying ' + hours + 'hr CO- against OT -\n';
-  txt += allocations.map(a => {
-    const e = a.entry;
-    const dateStr = e.date_label || fmtDateShort(e.entry_date);
-    const timeStr = e.time_from && e.time_to ? ' | ' + fmtTime(e.time_from) + '–' + fmtTime(e.time_to) : '';
-    const mode = '(' + modeShort(e.mode) + ')';
-    const totalOT = e.ot_hours;
-    const usedBefore = e.hours_used;
-    let usingPart = 'Using ' + a.hours;
-    if (usedBefore > 0) {
-      // Find which prior comp-offs used this entry
-      const priorAllocs = e.allocations.filter(x => x.compoff_id !== 'NEW');
-      const prior = priorAllocs.map(x => {
-        const c = allCompoffs.find(co => co.id === x.compoff_id);
-        return x.hours_drawn + ' on ' + (c ? fmtDateShort(c.taken_date).replace(/\s/g, '-') : '?');
-      }).join(', ');
-      usingPart += ' | Used ' + prior;
-    }
-    return '*' + dateStr + timeStr + ' ' + mode + ' → ' + totalOT + 'hr (' + usingPart + ')';
-  }).join('\n');
-  if (reason) txt = 'Reason: ' + reason + '\n\n' + txt;
-  return txt;
-}
-
-document.getElementById('record-copy-btn').addEventListener('click', async () => {
-  if (!isOwner) return;
-  const hours = parseInt(document.getElementById('comp-type').value);
-  const date = document.getElementById('comp-date').value;
-  const reason = document.getElementById('comp-reason').value.trim();
-
-  if (!date) { toast('Please pick the date you\'re taking off'); return; }
-
-  const ym = ymKey(date);
-  const usedThisMonth = compHoursThisMonth(ym);
-  if (usedThisMonth + hours > 32) {
-    toast('Exceeds monthly cap (' + usedThisMonth + '/32 in ' + ymLabel(ym) + ')');
-    return;
-  }
-
-  const plan = planAllocation(hours);
-  if (plan.shortfall > 0) {
-    toast('Insufficient OT balance — only ' + (hours - plan.shortfall) + ' hrs available');
-    return;
-  }
-
-  // Build the text first so we can copy it
-  const portalText = buildPortalText(hours, plan.allocations, reason);
-
-  // Save to database
-  const btn = document.getElementById('record-copy-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving…';
-
-  const { data: newCompoff, error } = await sb.from('compoffs').insert({
-    taken_date: date,
-    hours: hours,
-    status: 'pending',
-    applicant_note: reason || null
-  }).select().single();
-
-  if (error) {
-    btn.disabled = false;
-    btn.textContent = '📋 Record & Copy for Portal';
-    toast('Error saving: ' + error.message);
-    return;
-  }
-
-  // Save allocations
-  const allocRows = plan.allocations.map(a => ({
-    compoff_id: newCompoff.id,
-    entry_id: a.entry.id,
-    hours_drawn: a.hours
-  }));
-  const { error: allocError } = await sb.from('compoff_allocations').insert(allocRows);
-
-  if (allocError) {
-    toast('Allocation error: ' + allocError.message);
-  }
-
-  // Try to copy to clipboard
-  try {
-    await navigator.clipboard.writeText(portalText);
-    toast('Saved & copied to clipboard ✓ Paste in BDB portal', 4000);
-  } catch (e) {
-    toast('Saved ✓ See text below to copy manually', 4000);
-  }
-
-  // Show the text either way
-  document.getElementById('copy-output').style.display = 'block';
-  document.getElementById('copy-output').textContent = portalText;
-
-  btn.disabled = false;
-  btn.textContent = '📋 Record & Copy for Portal';
-
-  // Reset form
-  document.getElementById('comp-reason').value = '';
-
-  await loadAllData();
-});
-
-// ─── ACTIONS ───
-window.markApproved = async function(id) {
-  if (!isOwner) return;
-  const { error } = await sb.from('entries').update({ status: 'approved' }).eq('id', id);
-  if (error) { toast('Error: ' + error.message); return; }
-  toast('Marked approved ✓');
-  await loadAllData();
-};
 
 window.deleteEntry = async function(id) {
   if (!isOwner) return;
@@ -1030,60 +984,414 @@ window.deleteEntry = async function(id) {
   const { error } = await sb.from('entries').delete().eq('id', id);
   if (error) { toast('Error: ' + error.message); return; }
   toast('Deleted');
-  await loadAllData();
+  await refreshAll();
 };
 
-window.approveCompoff = async function(id) {
-  if (!isOwner) return;
-  const { error } = await sb.from('compoffs').update({ status: 'approved', manager_responded_at: new Date().toISOString() }).eq('id', id);
-  if (error) { toast('Error: ' + error.message); return; }
-  toast('Comp-off approved ✓');
-  await loadAllData();
-};
+// ─── COMP-OFF ───
+document.getElementById('comp-from-date').addEventListener('change', e => {
+  const toEl = document.getElementById('comp-to-date');
+  if (!toEl.value) toEl.value = e.target.value;
+  updateAllocationPreview();
+});
+['comp-from-half', 'comp-to-date', 'comp-to-half'].forEach(id => {
+  document.getElementById(id).addEventListener('change', updateAllocationPreview);
+});
 
-window.rejectCompoff = async function(id) {
-  if (!isOwner) return;
-  if (!confirm('Reject this comp-off? Hours will be returned to your balance.')) return;
-  // Delete allocations first to free up the hours
-  await sb.from('compoff_allocations').delete().eq('compoff_id', id);
-  const { error } = await sb.from('compoffs').update({ status: 'rejected', manager_responded_at: new Date().toISOString() }).eq('id', id);
-  if (error) { toast('Error: ' + error.message); return; }
-  toast('Comp-off rejected · hours restored');
-  await loadAllData();
-};
-
-window.copyCompoff = async function(id) {
-  const c = allCompoffs.find(x => x.id === id);
-  if (!c) return;
-  const txt = buildPortalText(c.hours, c.allocations.map(a => ({ entry: a.entry, hours: a.hours_drawn })), c.applicant_note);
-  try {
-    await navigator.clipboard.writeText(txt);
-    toast('Copied to clipboard ✓');
-  } catch (e) {
-    alert(txt);
+function planAllocation(hoursWanted) {
+  const sorted = cachedEntries
+    .filter(e => entryAvailableHours(e) > 0)
+    .map(e => ({ entry: e, available: entryAvailableHours(e) }))
+    .sort((a, b) => {
+      const da = a.entry.entry_date || a.entry.date_label || '9999';
+      const db = b.entry.entry_date || b.entry.date_label || '9999';
+      return da.localeCompare(db);
+    });
+  let need = hoursWanted;
+  const allocations = [];
+  for (const x of sorted) {
+    if (need <= 0) break;
+    const take = Math.min(need, x.available);
+    allocations.push({ entryId: x.entry.id, entry: x.entry, hoursDrawn: take });
+    need -= take;
   }
-};
+  return { allocations, shortfall: need };
+}
 
-// ─── SEARCH ───
-document.getElementById('search-input').addEventListener('input', e => {
-  const q = e.target.value.toLowerCase().trim();
-  if (!q) {
-    renderEntryList([].concat(allEntries).reverse(), 'all-list');
+function generatePortalText(hoursWanted, allocations, fromDate, fromHalf, toDate, toHalf) {
+  const rangeText = describeCompoffRange(fromDate, fromHalf, toDate, toHalf);
+  let lines = ['Comp-Off Application: ' + rangeText, '', 'Applying ' + hoursWanted + 'hr CO- against OT -'];
+  allocations.forEach(a => {
+    const e = a.entry;
+    const dateStr = e.date_label || fmtDateBDB(e.entry_date);
+    const timeStr = e.time_from && e.time_to ? fmtTime12(e.time_from) + ' – ' + fmtTime12(e.time_to) : '';
+    const claimedBefore = entryClaimedHours(e);
+    let line = '*' + dateStr;
+    if (timeStr) line += ' | ' + timeStr;
+    line += ' (' + modeShortLabel(e.mode) + ') → ' + e.ot_hours + 'hr';
+    line += ' (Using ' + a.hoursDrawn;
+    if (claimedBefore > 0) line += ' | Used ' + claimedBefore + ' before';
+    line += ')';
+    lines.push(line);
+  });
+  return lines.join('\n');
+}
+
+function updateAllocationPreview() {
+  const fromDate = document.getElementById('comp-from-date').value;
+  const fromHalf = document.getElementById('comp-from-half').value;
+  const toDate = document.getElementById('comp-to-date').value;
+  const toHalf = document.getElementById('comp-to-half').value;
+  const allocBox = document.getElementById('alloc-box');
+  const validation = document.getElementById('comp-validation');
+  const recordBtn = document.getElementById('record-copy-btn');
+  const copyBtn = document.getElementById('copy-only-btn');
+
+  if (!fromDate) {
+    allocBox.style.display = 'none';
+    validation.innerHTML = '<div class="warn-msg">Pick a From date to start.</div>';
+    if (recordBtn) recordBtn.disabled = true;
+    if (copyBtn) copyBtn.disabled = true;
     return;
   }
-  const filtered = allEntries.filter(ent =>
-    (ent.work_done || '').toLowerCase().includes(q) ||
-    (ent.date_label || '').toLowerCase().includes(q) ||
-    (ent.entry_date || '').includes(q) ||
-    modeLabel(ent.mode).toLowerCase().includes(q)
-  ).reverse();
-  renderEntryList(filtered, 'all-list');
+
+  const totalHours = calcCompoffHours(fromDate, fromHalf, toDate || fromDate, toHalf);
+  if (totalHours <= 0) {
+    allocBox.style.display = 'none';
+    validation.innerHTML = '<div class="warn-msg">⚠ Invalid date range.</div>';
+    if (recordBtn) recordBtn.disabled = true;
+    if (copyBtn) copyBtn.disabled = true;
+    return;
+  }
+
+  const plan = planAllocation(totalHours);
+
+  if (plan.allocations.length === 0) {
+    allocBox.style.display = 'none';
+  } else {
+    allocBox.style.display = 'block';
+    const rangeDesc = describeCompoffRange(fromDate, fromHalf, toDate || fromDate, toHalf);
+    let html = '<div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--line);">' +
+      '<strong>' + rangeDesc + '</strong> · Total: ' + totalHours + ' hrs</div>';
+    html += plan.allocations.map(a => {
+      const e = a.entry;
+      const lbl = e.date_label || fmtDate(e.entry_date);
+      return '<div class="alloc-row"><span class="alloc-source">' + lbl + ' · ' + modeLabel(e.mode) + '</span><span class="alloc-hours">' + a.hoursDrawn + ' hrs</span></div>';
+    }).join('');
+    if (plan.shortfall > 0) {
+      html += '<div class="alloc-row alloc-shortfall"><span>Shortfall</span><span>' + plan.shortfall + ' hrs</span></div>';
+    }
+    document.getElementById('alloc-rows').innerHTML = html;
+  }
+
+  let valHtml = '';
+  let canApply = true;
+
+  if (plan.shortfall > 0) {
+    valHtml += '<div class="warn-msg">⚠ Insufficient OT balance. Available: ' + (totalHours - plan.shortfall) + ' hrs, requested: ' + totalHours + ' hrs.</div>';
+    canApply = false;
+  }
+
+  // Check monthly cap for each month touched by the range
+  const rangeFrom = new Date(fromDate + 'T00:00:00');
+  const rangeTo = new Date((toDate || fromDate) + 'T00:00:00');
+  if (rangeFrom > rangeTo) {
+    valHtml += '<div class="warn-msg">⚠ To date must be on or after From date.</div>';
+    canApply = false;
+  } else {
+    // Group hours by month
+    const monthHours = {};
+    let cur = new Date(rangeFrom);
+    while (cur <= rangeTo) {
+      const ym = cur.getFullYear() + '-' + String(cur.getMonth() + 1).padStart(2, '0');
+      if (!monthHours[ym]) monthHours[ym] = 0;
+      // Determine hours for this day
+      let dayHours = 8;
+      const isFirst = cur.getTime() === rangeFrom.getTime();
+      const isLast = cur.getTime() === rangeTo.getTime();
+      if (isFirst && isLast) dayHours = halfToHours(fromHalf);
+      else if (isFirst) dayHours = halfToHours(fromHalf);
+      else if (isLast) dayHours = halfToHours(toHalf);
+      monthHours[ym] += dayHours;
+      cur.setDate(cur.getDate() + 1);
+    }
+
+    let monthCheckOK = true;
+    for (const ym in monthHours) {
+      const usedAlready = compHoursInMonth(ym);
+      const wouldBe = usedAlready + monthHours[ym];
+      const monthName = new Date(ym + '-01T00:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      if (wouldBe > 32) {
+        valHtml += '<div class="warn-msg">⚠ ' + monthName + ': would be ' + wouldBe + '/32 hrs (exceeds cap by ' + (wouldBe - 32) + ').</div>';
+        monthCheckOK = false;
+        canApply = false;
+      } else {
+        valHtml += '<div class="ok-msg">✓ ' + monthName + ': ' + wouldBe + '/32 hrs after this application.</div>';
+      }
+    }
+  }
+
+  validation.innerHTML = valHtml;
+  if (recordBtn) recordBtn.disabled = !canApply;
+  if (copyBtn) copyBtn.disabled = plan.allocations.length === 0 || plan.shortfall > 0;
+}
+
+async function copyToClipboard(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); document.body.removeChild(ta); return true; }
+    catch (err) { document.body.removeChild(ta); return false; }
+  }
+}
+
+document.getElementById('copy-only-btn').addEventListener('click', async () => {
+  const fromDate = document.getElementById('comp-from-date').value;
+  const fromHalf = document.getElementById('comp-from-half').value;
+  const toDate = document.getElementById('comp-to-date').value || fromDate;
+  const toHalf = document.getElementById('comp-to-half').value;
+  if (!fromDate) { toast('Pick a date first'); return; }
+  const total = calcCompoffHours(fromDate, fromHalf, toDate, toHalf);
+  const plan = planAllocation(total);
+  if (plan.shortfall > 0) { toast('Insufficient OT'); return; }
+  const text = generatePortalText(total, plan.allocations, fromDate, fromHalf, toDate, toHalf);
+  const ok = await copyToClipboard(text);
+  toast(ok ? 'Portal text copied ✓' : 'Copy failed');
+});
+
+document.getElementById('record-copy-btn').addEventListener('click', async () => {
+  if (!isOwner) return;
+  const fromDate = document.getElementById('comp-from-date').value;
+  const fromHalf = document.getElementById('comp-from-half').value;
+  const toDate = document.getElementById('comp-to-date').value || fromDate;
+  const toHalf = document.getElementById('comp-to-half').value;
+  const reason = document.getElementById('comp-reason').value.trim() || 'Personal Work';
+
+  if (!fromDate) { toast('Pick a From date'); return; }
+  const totalHours = calcCompoffHours(fromDate, fromHalf, toDate, toHalf);
+  if (totalHours <= 0) { toast('Invalid range'); return; }
+
+  const plan = planAllocation(totalHours);
+  if (plan.shortfall > 0) { toast('Insufficient OT balance'); return; }
+
+  const btn = document.getElementById('record-copy-btn');
+  btn.disabled = true; btn.textContent = 'Recording…';
+
+  const insertData = {
+    taken_date: fromDate,
+    hours: totalHours,
+    status: 'pending',
+    applicant_note: reason,
+    from_half: fromHalf,
+    to_date: toDate,
+    to_half: toHalf
+  };
+
+  const { data: newComp, error: compErr } = await sb.from('compoffs').insert(insertData).select().single();
+  if (compErr) { toast('Error: ' + compErr.message); btn.disabled = false; btn.textContent = '📋 Record & Copy for Portal'; return; }
+
+  const allocRows = plan.allocations.map(a => ({ compoff_id: newComp.id, entry_id: a.entryId, hours_drawn: a.hoursDrawn }));
+  const { error: allocErr } = await sb.from('compoff_allocations').insert(allocRows);
+  if (allocErr) {
+    await sb.from('compoffs').delete().eq('id', newComp.id);
+    toast('Error: ' + allocErr.message); btn.disabled = false; btn.textContent = '📋 Record & Copy for Portal'; return;
+  }
+
+  const text = generatePortalText(totalHours, plan.allocations, fromDate, fromHalf, toDate, toHalf);
+  const copied = await copyToClipboard(text);
+
+  btn.disabled = false; btn.textContent = '📋 Record & Copy for Portal';
+  document.getElementById('comp-from-date').value = '';
+  document.getElementById('comp-to-date').value = '';
+  document.getElementById('comp-reason').value = '';
+
+  toast(copied ? 'Recorded ✓ Text copied — paste into BDB portal' : 'Recorded ✓ (copy failed)', 4000);
+  await refreshAll();
   switchTab('entries');
 });
 
-// Set defaults
+// ─── EXCEL EXPORT ───
+document.getElementById('export-xlsx-btn').addEventListener('click', async () => {
+  try {
+    const wb = new ExcelJS.Workbook();
+    wb.creator = 'Harshil Shah · BDB341';
+    wb.created = new Date();
+
+    const ws = wb.addWorksheet('OT Log', {
+      pageSetup: { paperSize: 9, orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0, margins: { left: 0.4, right: 0.4, top: 0.5, bottom: 0.5, header: 0.3, footer: 0.3 } }
+    });
+
+    // Title
+    ws.mergeCells('A1:J1');
+    ws.getCell('A1').value = 'BDB 341 · Overtime Ledger · Harshil Shah';
+    ws.getCell('A1').font = { name: 'Calibri', size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+    ws.getCell('A1').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1A2C4F' } };
+    ws.getCell('A1').alignment = { horizontal: 'center', vertical: 'middle' };
+    ws.getRow(1).height = 28;
+
+    ws.mergeCells('A2:J2');
+    ws.getCell('A2').value = 'Generated: ' + new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    ws.getCell('A2').font = { name: 'Calibri', size: 9, italic: true, color: { argb: 'FF666666' } };
+    ws.getCell('A2').alignment = { horizontal: 'center' };
+    ws.getRow(2).height = 18;
+
+    // Headers
+    const headers = ['SR', 'Date', 'From', 'To', 'Mode', 'Work Done', 'OT hrs', 'Mail Date', 'Comp Status', 'Claim Details'];
+    headers.forEach((h, i) => {
+      const cell = ws.getCell(4, i + 1);
+      cell.value = h;
+      cell.font = { name: 'Calibri', size: 10, bold: true };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8E8EC' } };
+      cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+      cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+    });
+    ws.getRow(4).height = 24;
+
+    // Data — sort by date ascending for Excel
+    const sorted = cachedEntries.slice().sort((a, b) => {
+      const da = a.entry_date || a.date_label || '9999';
+      const db = b.entry_date || b.date_label || '9999';
+      return da.localeCompare(db);
+    });
+
+    sorted.forEach((e, idx) => {
+      const row = ws.getRow(5 + idx);
+      row.getCell(1).value = idx + 1;
+      row.getCell(2).value = e.date_label || fmtDate(e.entry_date);
+      row.getCell(3).value = e.time_from ? fmtTime12(e.time_from) : '—';
+      row.getCell(4).value = e.time_to ? fmtTime12(e.time_to) : '—';
+      row.getCell(5).value = modeLabel(e.mode);
+      row.getCell(6).value = e.work_done;
+      row.getCell(7).value = e.ot_hours;
+      row.getCell(8).value = e.mail_date ? fmtDate(e.mail_date) : '—';
+
+      const claimed = entryClaimedHours(e);
+      const allocs = e.compoff_allocations || [];
+      let statusText = 'Available';
+      if (claimed > 0) {
+        statusText = (claimed >= e.ot_hours ? 'Fully Claimed' : claimed + '/' + e.ot_hours + ' claimed');
+      }
+      row.getCell(9).value = statusText;
+
+      const claimDetails = allocs.map(a => {
+        const c = cachedCompoffs.find(x => x.id === a.compoff_id);
+        return (c ? fmtDate(c.taken_date) : '—') + ' (' + a.hours_drawn + 'h)';
+      }).join(', ');
+      row.getCell(10).value = claimDetails || '—';
+
+      // Style
+      for (let i = 1; i <= 10; i++) {
+        const cell = row.getCell(i);
+        cell.font = { name: 'Calibri', size: 9 };
+        cell.alignment = { vertical: 'top', wrapText: true };
+        cell.border = { top: { style: 'hair', color: { argb: 'FFCCCCCC' } }, bottom: { style: 'hair', color: { argb: 'FFCCCCCC' } }, left: { style: 'hair', color: { argb: 'FFCCCCCC' } }, right: { style: 'hair', color: { argb: 'FFCCCCCC' } } };
+      }
+      row.getCell(1).alignment = { horizontal: 'center' };
+      row.getCell(7).alignment = { horizontal: 'center' };
+      // Mode color
+      const modeColors = { 'wfo-normal': 'FFE8F0FD', 'wfo-holiday': 'FFFDE8D8', 'ot-after-hours': 'FFE6F4E9', 'wfh': 'FFE6F4E9' };
+      if (modeColors[e.mode]) {
+        row.getCell(5).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: modeColors[e.mode] } };
+      }
+    });
+
+    // Summary row
+    const summaryRow = 5 + sorted.length + 1;
+    ws.getCell(summaryRow, 6).value = 'Total OT';
+    ws.getCell(summaryRow, 6).font = { name: 'Calibri', size: 10, bold: true };
+    ws.getCell(summaryRow, 6).alignment = { horizontal: 'right' };
+    ws.getCell(summaryRow, 7).value = { formula: 'SUM(G5:G' + (4 + sorted.length) + ')' };
+    ws.getCell(summaryRow, 7).font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FF1A2C4F' } };
+    ws.getCell(summaryRow, 7).alignment = { horizontal: 'center' };
+    ws.getCell(summaryRow, 7).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF2CC' } };
+
+    ws.getCell(summaryRow + 1, 6).value = 'Comp Used';
+    ws.getCell(summaryRow + 1, 6).font = { name: 'Calibri', size: 10, bold: true };
+    ws.getCell(summaryRow + 1, 6).alignment = { horizontal: 'right' };
+    ws.getCell(summaryRow + 1, 7).value = totalCompUsedAll();
+    ws.getCell(summaryRow + 1, 7).font = { name: 'Calibri', size: 11, bold: true };
+    ws.getCell(summaryRow + 1, 7).alignment = { horizontal: 'center' };
+
+    ws.getCell(summaryRow + 2, 6).value = 'Balance';
+    ws.getCell(summaryRow + 2, 6).font = { name: 'Calibri', size: 10, bold: true };
+    ws.getCell(summaryRow + 2, 6).alignment = { horizontal: 'right' };
+    ws.getCell(summaryRow + 2, 7).value = availableBalance();
+    ws.getCell(summaryRow + 2, 7).font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF1A2C4F' } };
+    ws.getCell(summaryRow + 2, 7).alignment = { horizontal: 'center' };
+    ws.getCell(summaryRow + 2, 7).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F0FD' } };
+
+    // Column widths
+    ws.getColumn(1).width = 5;
+    ws.getColumn(2).width = 22;
+    ws.getColumn(3).width = 11;
+    ws.getColumn(4).width = 11;
+    ws.getColumn(5).width = 18;
+    ws.getColumn(6).width = 50;
+    ws.getColumn(7).width = 8;
+    ws.getColumn(8).width = 13;
+    ws.getColumn(9).width = 16;
+    ws.getColumn(10).width = 28;
+
+    // Comp-off sheet
+    const ws2 = wb.addWorksheet('Comp-Off History', {
+      pageSetup: { paperSize: 9, orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 }
+    });
+    ws2.mergeCells('A1:E1');
+    ws2.getCell('A1').value = 'Comp-Off History';
+    ws2.getCell('A1').font = { name: 'Calibri', size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+    ws2.getCell('A1').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1A2C4F' } };
+    ws2.getCell('A1').alignment = { horizontal: 'center', vertical: 'middle' };
+    ws2.getRow(1).height = 28;
+
+    const co_headers = ['Date Taken', 'Hours', 'Status', 'Reason', 'Drawn From'];
+    co_headers.forEach((h, i) => {
+      const cell = ws2.getCell(3, i + 1);
+      cell.value = h;
+      cell.font = { name: 'Calibri', size: 10, bold: true };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8E8EC' } };
+      cell.alignment = { horizontal: 'center' };
+      cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+    });
+
+    cachedCompoffs.slice().sort((a, b) => (a.taken_date || '').localeCompare(b.taken_date || '')).forEach((c, idx) => {
+      const row = ws2.getRow(4 + idx);
+      row.getCell(1).value = fmtDate(c.taken_date);
+      row.getCell(2).value = c.hours;
+      row.getCell(3).value = c.status === 'approved' ? 'Approved' : (c.status === 'pending' ? 'Pending' : c.status);
+      row.getCell(4).value = c.applicant_note || '—';
+      const drawn = (c.compoff_allocations || []).map(a => {
+        const e = cachedEntries.find(x => x.id === a.entry_id);
+        return (e ? (e.date_label || fmtDate(e.entry_date)) : '—') + ' (' + a.hours_drawn + 'h)';
+      }).join(', ');
+      row.getCell(5).value = drawn || '—';
+      for (let i = 1; i <= 5; i++) {
+        row.getCell(i).font = { name: 'Calibri', size: 9 };
+        row.getCell(i).alignment = { vertical: 'top', wrapText: true };
+      }
+    });
+    ws2.getColumn(1).width = 16;
+    ws2.getColumn(2).width = 8;
+    ws2.getColumn(3).width = 12;
+    ws2.getColumn(4).width = 22;
+    ws2.getColumn(5).width = 60;
+
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'OT_Harshil_Shah_BDB341_' + new Date().toISOString().slice(0, 10) + '.xlsx';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('Excel downloaded ✓');
+  } catch (err) {
+    console.error('Export error:', err);
+    toast('Export failed: ' + err.message);
+  }
+});
+
+// ─── INIT ───
 document.getElementById('f-date').valueAsDate = new Date();
-document.getElementById('comp-date').valueAsDate = new Date();
 </script>
 </body>
 </html>
